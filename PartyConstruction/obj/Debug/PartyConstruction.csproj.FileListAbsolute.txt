@@ -1,0 +1,7 @@
+E:\projects\智慧党建\PartyConstruction\bin\PartyConstruction.dll.config
+E:\projects\智慧党建\PartyConstruction\bin\PartyConstruction.dll
+E:\projects\智慧党建\PartyConstruction\bin\PartyConstruction.pdb
+E:\projects\智慧党建\PartyConstruction\obj\Debug\PartyConstruction.csprojAssemblyReference.cache
+E:\projects\智慧党建\PartyConstruction\obj\Debug\PartyConstruction.csproj.CoreCompileInputs.cache
+E:\projects\智慧党建\PartyConstruction\obj\Debug\PartyConstruction.dll
+E:\projects\智慧党建\PartyConstruction\obj\Debug\PartyConstruction.pdb
