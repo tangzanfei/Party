@@ -1,6 +1,0 @@
-E:\projects\智慧党建\PartyConstruction\bin\PartyConstruction.dll.config
-E:\projects\智慧党建\PartyConstruction\bin\PartyConstruction.dll
-E:\projects\智慧党建\PartyConstruction\bin\PartyConstruction.pdb
-E:\projects\智慧党建\PartyConstruction\obj\Release\PartyConstruction.csproj.CoreCompileInputs.cache
-E:\projects\智慧党建\PartyConstruction\obj\Release\PartyConstruction.dll
-E:\projects\智慧党建\PartyConstruction\obj\Release\PartyConstruction.pdb

@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,9 +38,17 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Maticsoft.Common">
+      <HintPath>C:\Users\Administrator\Desktop\test\CodematicDemo\Lib\Maticsoft.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.SQLite, Version=1.0.112.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Administrator\Desktop\test\CodematicDemo\Lib\System.Data.SQLite.DLL</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -58,6 +67,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Lib\PartyConstruction.db3" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -67,14 +77,35 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Lib\Maticsoft.Common.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Lib\System.Data.SQLite.DLL">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Login.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\ActionInfo.cs" />
+    <Compile Include="BLL\BranchInfo.cs" />
+    <Compile Include="BLL\ScoreInfo.cs" />
+    <Compile Include="BLL\UserActionData.cs" />
+    <Compile Include="BLL\UserInfo.cs" />
+    <Compile Include="DAL\ActionInfo.cs" />
+    <Compile Include="DAL\BranchInfo.cs" />
+    <Compile Include="DAL\ScoreInfo.cs" />
+    <Compile Include="DAL\UserActionData.cs" />
+    <Compile Include="DAL\UserInfo.cs" />
+    <Compile Include="Models\ActionInfo.cs" />
+    <Compile Include="Models\BranchInfo.cs" />
+    <Compile Include="Models\ScoreInfo.cs" />
+    <Compile Include="Models\UserActionData.cs" />
+    <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\DbHelperSQLite.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Views\" />
   </ItemGroup>
   <PropertyGroup>
