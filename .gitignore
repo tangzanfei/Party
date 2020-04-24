@@ -1,3 +1,6 @@
 PartyConstruction/obj/*
 PartyConstruction/bin/*
+PartyConstruction/.vs/*
 *.pdb
+*.vs
+*.suo
