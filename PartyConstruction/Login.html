@@ -13,7 +13,7 @@
                 save()
                 $.ajax({
                     type: 'POST',
-                    url: 'LoginHandler.ashx',
+                    url: 'Views\LoginHandler.ashx',
                     data: { ID: s },
                     success: function (data) {
                         switch (data) {
@@ -62,12 +62,12 @@
         };
     </script>
 </head>
-<body>
+<body >
     <div data-role="page">
         <div data-role="header">
             <h1>党建积分考核系统</h1>
         </div>
-        <div data-role="main" class="ui-content" style="min-width:250px;max-width:400px;">
+        <div data-role="main" class="ui-content" style="min-width:250px;max-width:400px;margin:auto auto;">
             <form method="post">
                 <label for="ID">用户名：</label>
                 <input type="text" name="ID" id="ID">

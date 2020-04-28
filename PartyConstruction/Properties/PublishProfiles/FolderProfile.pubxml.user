@@ -9,17 +9,38 @@
     <_PublishTargetUrl>E:\projects\WebRoot</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
+    <File Include="bin/Lib/Maticsoft.Common.dll">
+      <publishTime>04/23/2020 16:08:08</publishTime>
+    </File>
+    <File Include="bin/Lib/System.Data.SQLite.DLL">
+      <publishTime>04/23/2020 16:08:08</publishTime>
+    </File>
+    <File Include="bin/Maticsoft.Common.dll">
+      <publishTime>04/23/2020 16:08:08</publishTime>
+    </File>
     <File Include="bin/PartyConstruction.dll">
-      <publishTime>04/22/2020 17:17:07</publishTime>
+      <publishTime>04/24/2020 11:49:04</publishTime>
     </File>
     <File Include="bin/PartyConstruction.pdb">
-      <publishTime>04/22/2020 17:17:07</publishTime>
+      <publishTime>04/24/2020 11:49:04</publishTime>
+    </File>
+    <File Include="bin/System.Data.SQLite.DLL">
+      <publishTime>04/23/2020 16:08:08</publishTime>
+    </File>
+    <File Include="Lib/Maticsoft.Common.dll">
+      <publishTime>04/23/2020 16:08:08</publishTime>
+    </File>
+    <File Include="Lib/PartyConstruction.db3">
+      <publishTime>04/16/2020 17:36:21</publishTime>
+    </File>
+    <File Include="Lib/System.Data.SQLite.DLL">
+      <publishTime>04/23/2020 16:08:08</publishTime>
     </File>
     <File Include="Login.html">
-      <publishTime>04/22/2020 17:15:37</publishTime>
+      <publishTime>04/24/2020 11:56:26</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/22/2020 17:17:07</publishTime>
+      <publishTime>04/24/2020 11:36:47</publishTime>
     </File>
   </ItemGroup>
 </Project>
