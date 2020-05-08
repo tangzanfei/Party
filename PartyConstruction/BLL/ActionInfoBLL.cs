@@ -1,20 +1,4 @@
-﻿/**  版本信息模板在安装目录下，可自行修改。
-* BranchInfo.cs
-*
-* 功 能： N/A
-* 类 名： BranchInfo
-*
-* Ver    变更日期             负责人  变更内容
-* ───────────────────────────────────
-* V0.01  2020/4/23 星期四 上午 10:30:52   N/A    初版
-*
-* Copyright (c) 2012 Maticsoft Corporation. All rights reserved.
-*┌──────────────────────────────────┐
-*│　此技术信息为本公司机密信息，未经本公司书面同意禁止向第三方披露．　│
-*│　版权所有：动软卓越（北京）科技有限公司　　　　　　　　　　　　　　│
-*└──────────────────────────────────┘
-*/
-using System;
+﻿using System;
 using System.Data;
 using System.Collections.Generic;
 using Maticsoft.Common;
@@ -22,12 +6,12 @@ using PartyConstruction.Model;
 namespace PartyConstruction.BLL
 {
 	/// <summary>
-	/// BranchInfo
+	/// ActionInfoBLL
 	/// </summary>
-	public partial class BranchInfo
+	public partial class ActionInfoBLL
 	{
-		private readonly PartyConstruction.DAL.BranchInfo dal=new PartyConstruction.DAL.BranchInfo();
-		public BranchInfo()
+		private readonly PartyConstruction.DAL.ActionInfoDAL dal=new PartyConstruction.DAL.ActionInfoDAL();
+		public ActionInfoBLL()
 		{}
 		#region  BasicMethod
 
@@ -50,7 +34,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public bool Add(PartyConstruction.Model.BranchInfo model)
+		public bool Add(PartyConstruction.Model.DBActionInfo model)
 		{
 			return dal.Add(model);
 		}
@@ -58,7 +42,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(PartyConstruction.Model.BranchInfo model)
+		public bool Update(PartyConstruction.Model.DBActionInfo model)
 		{
 			return dal.Update(model);
 		}
@@ -82,7 +66,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public PartyConstruction.Model.BranchInfo GetModel(int ID)
+		public PartyConstruction.Model.DBActionInfo GetModel(int ID)
 		{
 			
 			return dal.GetModel(ID);
@@ -91,10 +75,10 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 得到一个对象实体，从缓存中
 		/// </summary>
-		public PartyConstruction.Model.BranchInfo GetModelByCache(int ID)
+		public PartyConstruction.Model.DBActionInfo GetModelByCache(int ID)
 		{
 			
-			string CacheKey = "BranchInfoModel-" + ID;
+			string CacheKey = "DBActionInfoModel-" + ID;
 			object objModel = Maticsoft.Common.DataCache.GetCache(CacheKey);
 			if (objModel == null)
 			{
@@ -109,7 +93,7 @@ namespace PartyConstruction.BLL
 				}
 				catch{}
 			}
-			return (PartyConstruction.Model.BranchInfo)objModel;
+			return (PartyConstruction.Model.DBActionInfo)objModel;
 		}
 
 		/// <summary>
@@ -122,7 +106,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<PartyConstruction.Model.BranchInfo> GetModelList(string strWhere)
+		public List<PartyConstruction.Model.DBActionInfo> GetModelList(string strWhere)
 		{
 			DataSet ds = dal.GetList(strWhere);
 			return DataTableToList(ds.Tables[0]);
@@ -130,13 +114,13 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<PartyConstruction.Model.BranchInfo> DataTableToList(DataTable dt)
+		public List<PartyConstruction.Model.DBActionInfo> DataTableToList(DataTable dt)
 		{
-			List<PartyConstruction.Model.BranchInfo> modelList = new List<PartyConstruction.Model.BranchInfo>();
+			List<PartyConstruction.Model.DBActionInfo> modelList = new List<PartyConstruction.Model.DBActionInfo>();
 			int rowsCount = dt.Rows.Count;
 			if (rowsCount > 0)
 			{
-				PartyConstruction.Model.BranchInfo model;
+				PartyConstruction.Model.DBActionInfo model;
 				for (int n = 0; n < rowsCount; n++)
 				{
 					model = dal.DataRowToModel(dt.Rows[n]);
@@ -157,6 +141,13 @@ namespace PartyConstruction.BLL
 			return GetList("");
 		}
 
+		/// <summary>
+		/// 分页获取数据列表
+		/// </summary>
+		public int GetRecordCount(string strWhere)
+		{
+			return dal.GetRecordCount(strWhere);
+		}
 		/// <summary>
 		/// 分页获取数据列表
 		/// </summary>

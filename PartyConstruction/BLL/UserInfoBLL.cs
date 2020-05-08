@@ -1,20 +1,4 @@
-﻿/**  版本信息模板在安装目录下，可自行修改。
-* ScoreInfo.cs
-*
-* 功 能： N/A
-* 类 名： ScoreInfo
-*
-* Ver    变更日期             负责人  变更内容
-* ───────────────────────────────────
-* V0.01  2020/4/23 星期四 上午 10:30:52   N/A    初版
-*
-* Copyright (c) 2012 Maticsoft Corporation. All rights reserved.
-*┌──────────────────────────────────┐
-*│　此技术信息为本公司机密信息，未经本公司书面同意禁止向第三方披露．　│
-*│　版权所有：动软卓越（北京）科技有限公司　　　　　　　　　　　　　　│
-*└──────────────────────────────────┘
-*/
-using System;
+﻿using System;
 using System.Data;
 using System.Collections.Generic;
 using Maticsoft.Common;
@@ -22,12 +6,12 @@ using PartyConstruction.Model;
 namespace PartyConstruction.BLL
 {
 	/// <summary>
-	/// ScoreInfo
+	/// UserInfoBLL
 	/// </summary>
-	public partial class ScoreInfo
+	public partial class UserInfoBLL
 	{
-		private readonly PartyConstruction.DAL.ScoreInfo dal=new PartyConstruction.DAL.ScoreInfo();
-		public ScoreInfo()
+		private readonly PartyConstruction.DAL.UserInfoDAL dal=new PartyConstruction.DAL.UserInfoDAL();
+		public UserInfoBLL()
 		{}
 		#region  BasicMethod
 
@@ -50,7 +34,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public bool Add(PartyConstruction.Model.ScoreInfo model)
+		public bool Add(PartyConstruction.Model.DBUserInfo model)
 		{
 			return dal.Add(model);
 		}
@@ -58,7 +42,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(PartyConstruction.Model.ScoreInfo model)
+		public bool Update(PartyConstruction.Model.DBUserInfo model)
 		{
 			return dal.Update(model);
 		}
@@ -82,7 +66,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public PartyConstruction.Model.ScoreInfo GetModel(int ID)
+		public PartyConstruction.Model.DBUserInfo GetModel(int ID)
 		{
 			
 			return dal.GetModel(ID);
@@ -91,10 +75,10 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 得到一个对象实体，从缓存中
 		/// </summary>
-		public PartyConstruction.Model.ScoreInfo GetModelByCache(int ID)
+		public PartyConstruction.Model.DBUserInfo GetModelByCache(int ID)
 		{
 			
-			string CacheKey = "ScoreInfoModel-" + ID;
+			string CacheKey = "DBUserInfoModel-" + ID;
 			object objModel = Maticsoft.Common.DataCache.GetCache(CacheKey);
 			if (objModel == null)
 			{
@@ -109,7 +93,7 @@ namespace PartyConstruction.BLL
 				}
 				catch{}
 			}
-			return (PartyConstruction.Model.ScoreInfo)objModel;
+			return (PartyConstruction.Model.DBUserInfo)objModel;
 		}
 
 		/// <summary>
@@ -122,7 +106,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<PartyConstruction.Model.ScoreInfo> GetModelList(string strWhere)
+		public List<PartyConstruction.Model.DBUserInfo> GetModelList(string strWhere)
 		{
 			DataSet ds = dal.GetList(strWhere);
 			return DataTableToList(ds.Tables[0]);
@@ -130,13 +114,13 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<PartyConstruction.Model.ScoreInfo> DataTableToList(DataTable dt)
+		public List<PartyConstruction.Model.DBUserInfo> DataTableToList(DataTable dt)
 		{
-			List<PartyConstruction.Model.ScoreInfo> modelList = new List<PartyConstruction.Model.ScoreInfo>();
+			List<PartyConstruction.Model.DBUserInfo> modelList = new List<PartyConstruction.Model.DBUserInfo>();
 			int rowsCount = dt.Rows.Count;
 			if (rowsCount > 0)
 			{
-				PartyConstruction.Model.ScoreInfo model;
+				PartyConstruction.Model.DBUserInfo model;
 				for (int n = 0; n < rowsCount; n++)
 				{
 					model = dal.DataRowToModel(dt.Rows[n]);
@@ -157,6 +141,13 @@ namespace PartyConstruction.BLL
 			return GetList("");
 		}
 
+		/// <summary>
+		/// 分页获取数据列表
+		/// </summary>
+		public int GetRecordCount(string strWhere)
+		{
+			return dal.GetRecordCount(strWhere);
+		}
 		/// <summary>
 		/// 分页获取数据列表
 		/// </summary>

@@ -14,7 +14,8 @@ namespace Maticsoft.DBUtility
     public abstract class DbHelperSQLite
     {
         //数据库连接字符串(web.config来配置)，可以动态更改connectionString支持多数据库.		
-        public static string connectionString = "Data Source=PartyConstruction.db3;Version=3";
+        public static string connectionString = ConfigurationManager.ConnectionStrings["SQLiteDB"].ConnectionString;
+
         public DbHelperSQLite()
         {
         }

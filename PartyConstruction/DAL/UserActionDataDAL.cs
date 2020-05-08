@@ -1,20 +1,4 @@
-﻿/**  版本信息模板在安装目录下，可自行修改。
-* UserActionData.cs
-*
-* 功 能： N/A
-* 类 名： UserActionData
-*
-* Ver    变更日期             负责人  变更内容
-* ───────────────────────────────────
-* V0.01  2020/4/23 星期四 上午 10:30:52   N/A    初版
-*
-* Copyright (c) 2012 Maticsoft Corporation. All rights reserved.
-*┌──────────────────────────────────┐
-*│　此技术信息为本公司机密信息，未经本公司书面同意禁止向第三方披露．　│
-*│　版权所有：动软卓越（北京）科技有限公司　　　　　　　　　　　　　　│
-*└──────────────────────────────────┘
-*/
-using System;
+﻿using System;
 using System.Data;
 using System.Text;
 using System.Data.SQLite;
@@ -22,11 +6,11 @@ using Maticsoft.DBUtility;//Please add references
 namespace PartyConstruction.DAL
 {
 	/// <summary>
-	/// 数据访问类:UserActionData
+	/// 数据访问类:UserActionDataDAL
 	/// </summary>
-	public partial class UserActionData
+	public partial class UserActionDataDAL
 	{
-		public UserActionData()
+		public UserActionDataDAL()
 		{}
 		#region  BasicMethod
 
@@ -57,7 +41,7 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public bool Add(PartyConstruction.Model.UserActionData model)
+		public bool Add(PartyConstruction.Model.DBUserActionData model)
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("insert into UserActionData(");
@@ -89,7 +73,7 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(PartyConstruction.Model.UserActionData model)
+		public bool Update(PartyConstruction.Model.DBUserActionData model)
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("update UserActionData set ");
@@ -167,7 +151,7 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public PartyConstruction.Model.UserActionData GetModel(int ID)
+		public PartyConstruction.Model.DBUserActionData GetModel(int ID)
 		{
 			
 			StringBuilder strSql=new StringBuilder();
@@ -177,7 +161,7 @@ namespace PartyConstruction.DAL
 					new SQLiteParameter("@ID", DbType.Int32,8)			};
 			parameters[0].Value = ID;
 
-			PartyConstruction.Model.UserActionData model=new PartyConstruction.Model.UserActionData();
+			PartyConstruction.Model.DBUserActionData model=new PartyConstruction.Model.DBUserActionData();
 			DataSet ds=DbHelperSQLite.Query(strSql.ToString(),parameters);
 			if(ds.Tables[0].Rows.Count>0)
 			{
@@ -193,9 +177,9 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public PartyConstruction.Model.UserActionData DataRowToModel(DataRow row)
+		public PartyConstruction.Model.DBUserActionData DataRowToModel(DataRow row)
 		{
-			PartyConstruction.Model.UserActionData model=new PartyConstruction.Model.UserActionData();
+			PartyConstruction.Model.DBUserActionData model=new PartyConstruction.Model.DBUserActionData();
 			if (row != null)
 			{
 				if(row["ID"]!=null && row["ID"].ToString()!="")
@@ -244,6 +228,27 @@ namespace PartyConstruction.DAL
 			return DbHelperSQLite.Query(strSql.ToString());
 		}
 
+		/// <summary>
+		/// 获取记录总数
+		/// </summary>
+		public int GetRecordCount(string strWhere)
+		{
+			StringBuilder strSql=new StringBuilder();
+			strSql.Append("select count(1) FROM UserActionData ");
+			if(strWhere.Trim()!="")
+			{
+				strSql.Append(" where "+strWhere);
+			}
+			object obj = DbHelperSQL.GetSingle(strSql.ToString());
+			if (obj == null)
+			{
+				return 0;
+			}
+			else
+			{
+				return Convert.ToInt32(obj);
+			}
+		}
 		/// <summary>
 		/// 分页获取数据列表
 		/// </summary>

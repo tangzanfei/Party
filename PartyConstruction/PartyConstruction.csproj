@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Lib\PartyConstruction.db3" />
+    <Content Include="Controlers\LoginHandler.ashx" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -87,23 +88,28 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BLL\ActionInfo.cs" />
-    <Compile Include="BLL\BranchInfo.cs" />
-    <Compile Include="BLL\ScoreInfo.cs" />
-    <Compile Include="BLL\UserActionData.cs" />
-    <Compile Include="BLL\UserInfo.cs" />
-    <Compile Include="DAL\ActionInfo.cs" />
-    <Compile Include="DAL\BranchInfo.cs" />
-    <Compile Include="DAL\ScoreInfo.cs" />
-    <Compile Include="DAL\UserActionData.cs" />
-    <Compile Include="DAL\UserInfo.cs" />
-    <Compile Include="Models\ActionInfo.cs" />
-    <Compile Include="Models\BranchInfo.cs" />
-    <Compile Include="Models\ScoreInfo.cs" />
-    <Compile Include="Models\UserActionData.cs" />
-    <Compile Include="Models\UserInfo.cs" />
+    <Compile Include="BLL\ActionInfoBLL.cs" />
+    <Compile Include="BLL\BranchInfoBLL.cs" />
+    <Compile Include="BLL\ScoreInfoBLL.cs" />
+    <Compile Include="BLL\UserActionDataBLL.cs" />
+    <Compile Include="BLL\UserInfoBLL.cs" />
+    <Compile Include="Controlers\LoginHandler.ashx.cs">
+      <DependentUpon>LoginHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ActionInfoDAL.cs" />
+    <Compile Include="DAL\BranchInfoDAL.cs" />
+    <Compile Include="DAL\ScoreInfoDAL.cs" />
+    <Compile Include="DAL\UserActionDataDAL.cs" />
+    <Compile Include="DAL\UserInfoDAL.cs" />
+    <Compile Include="DBUtility\CommandInfo.cs" />
+    <Compile Include="DBUtility\DbHelperSQL.cs" />
+    <Compile Include="DBUtility\DbHelperSQLite.cs" />
+    <Compile Include="Model\DBActionInfo.cs" />
+    <Compile Include="Model\DBBranchInfo.cs" />
+    <Compile Include="Model\DBScoreInfo.cs" />
+    <Compile Include="Model\DBUserActionData.cs" />
+    <Compile Include="Model\DBUserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\DbHelperSQLite.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />

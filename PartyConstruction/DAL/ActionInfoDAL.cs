@@ -1,20 +1,4 @@
-﻿/**  版本信息模板在安装目录下，可自行修改。
-* BranchInfo.cs
-*
-* 功 能： N/A
-* 类 名： BranchInfo
-*
-* Ver    变更日期             负责人  变更内容
-* ───────────────────────────────────
-* V0.01  2020/4/23 星期四 上午 10:30:52   N/A    初版
-*
-* Copyright (c) 2012 Maticsoft Corporation. All rights reserved.
-*┌──────────────────────────────────┐
-*│　此技术信息为本公司机密信息，未经本公司书面同意禁止向第三方披露．　│
-*│　版权所有：动软卓越（北京）科技有限公司　　　　　　　　　　　　　　│
-*└──────────────────────────────────┘
-*/
-using System;
+﻿using System;
 using System.Data;
 using System.Text;
 using System.Data.SQLite;
@@ -22,11 +6,11 @@ using Maticsoft.DBUtility;//Please add references
 namespace PartyConstruction.DAL
 {
 	/// <summary>
-	/// 数据访问类:BranchInfo
+	/// 数据访问类:ActionInfoDAL
 	/// </summary>
-	public partial class BranchInfo
+	public partial class ActionInfoDAL
 	{
-		public BranchInfo()
+		public ActionInfoDAL()
 		{}
 		#region  BasicMethod
 
@@ -35,7 +19,7 @@ namespace PartyConstruction.DAL
 		/// </summary>
 		public int GetMaxId()
 		{
-		return DbHelperSQLite.GetMaxID("ID", "BranchInfo"); 
+		return DbHelperSQLite.GetMaxID("ID", "ActionInfo"); 
 		}
 
 		/// <summary>
@@ -44,7 +28,7 @@ namespace PartyConstruction.DAL
 		public bool Exists(int ID)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) from BranchInfo");
+			strSql.Append("select count(1) from ActionInfo");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
 					new SQLiteParameter("@ID", DbType.Int32,8)			};
@@ -57,20 +41,26 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public bool Add(PartyConstruction.Model.BranchInfo model)
+		public bool Add(PartyConstruction.Model.DBActionInfo model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("insert into BranchInfo(");
-			strSql.Append("ID,Name,ParentBranchID)");
+			strSql.Append("insert into ActionInfo(");
+			strSql.Append("ID,BeginTime,EndTime,Title,Content,BranchID)");
 			strSql.Append(" values (");
-			strSql.Append("@ID,@Name,@ParentBranchID)");
+			strSql.Append("@ID,@BeginTime,@EndTime,@Title,@Content,@BranchID)");
 			SQLiteParameter[] parameters = {
 					new SQLiteParameter("@ID", DbType.Int32,8),
-					new SQLiteParameter("@Name", DbType.String,2147483647),
-					new SQLiteParameter("@ParentBranchID", DbType.Int32,8)};
+					new SQLiteParameter("@BeginTime", DbType.DateTime),
+					new SQLiteParameter("@EndTime", DbType.DateTime),
+					new SQLiteParameter("@Title", DbType.String,2147483647),
+					new SQLiteParameter("@Content", DbType.String,2147483647),
+					new SQLiteParameter("@BranchID", DbType.Int32,8)};
 			parameters[0].Value = model.ID;
-			parameters[1].Value = model.Name;
-			parameters[2].Value = model.ParentBranchID;
+			parameters[1].Value = model.BeginTime;
+			parameters[2].Value = model.EndTime;
+			parameters[3].Value = model.Title;
+			parameters[4].Value = model.Content;
+			parameters[5].Value = model.BranchID;
 
 			int rows=DbHelperSQLite.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -85,20 +75,29 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(PartyConstruction.Model.BranchInfo model)
+		public bool Update(PartyConstruction.Model.DBActionInfo model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("update BranchInfo set ");
-			strSql.Append("Name=@Name,");
-			strSql.Append("ParentBranchID=@ParentBranchID");
+			strSql.Append("update ActionInfo set ");
+			strSql.Append("BeginTime=@BeginTime,");
+			strSql.Append("EndTime=@EndTime,");
+			strSql.Append("Title=@Title,");
+			strSql.Append("Content=@Content,");
+			strSql.Append("BranchID=@BranchID");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
-					new SQLiteParameter("@Name", DbType.String,2147483647),
-					new SQLiteParameter("@ParentBranchID", DbType.Int32,8),
+					new SQLiteParameter("@BeginTime", DbType.DateTime),
+					new SQLiteParameter("@EndTime", DbType.DateTime),
+					new SQLiteParameter("@Title", DbType.String,2147483647),
+					new SQLiteParameter("@Content", DbType.String,2147483647),
+					new SQLiteParameter("@BranchID", DbType.Int32,8),
 					new SQLiteParameter("@ID", DbType.Int32,8)};
-			parameters[0].Value = model.Name;
-			parameters[1].Value = model.ParentBranchID;
-			parameters[2].Value = model.ID;
+			parameters[0].Value = model.BeginTime;
+			parameters[1].Value = model.EndTime;
+			parameters[2].Value = model.Title;
+			parameters[3].Value = model.Content;
+			parameters[4].Value = model.BranchID;
+			parameters[5].Value = model.ID;
 
 			int rows=DbHelperSQLite.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -118,7 +117,7 @@ namespace PartyConstruction.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from BranchInfo ");
+			strSql.Append("delete from ActionInfo ");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
 					new SQLiteParameter("@ID", DbType.Int32,8)			};
@@ -140,7 +139,7 @@ namespace PartyConstruction.DAL
 		public bool DeleteList(string IDlist )
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from BranchInfo ");
+			strSql.Append("delete from ActionInfo ");
 			strSql.Append(" where ID in ("+IDlist + ")  ");
 			int rows=DbHelperSQLite.ExecuteSql(strSql.ToString());
 			if (rows > 0)
@@ -157,17 +156,17 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public PartyConstruction.Model.BranchInfo GetModel(int ID)
+		public PartyConstruction.Model.DBActionInfo GetModel(int ID)
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select ID,Name,ParentBranchID from BranchInfo ");
+			strSql.Append("select ID,BeginTime,EndTime,Title,Content,BranchID from ActionInfo ");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
 					new SQLiteParameter("@ID", DbType.Int32,8)			};
 			parameters[0].Value = ID;
 
-			PartyConstruction.Model.BranchInfo model=new PartyConstruction.Model.BranchInfo();
+			PartyConstruction.Model.DBActionInfo model=new PartyConstruction.Model.DBActionInfo();
 			DataSet ds=DbHelperSQLite.Query(strSql.ToString(),parameters);
 			if(ds.Tables[0].Rows.Count>0)
 			{
@@ -183,22 +182,34 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public PartyConstruction.Model.BranchInfo DataRowToModel(DataRow row)
+		public PartyConstruction.Model.DBActionInfo DataRowToModel(DataRow row)
 		{
-			PartyConstruction.Model.BranchInfo model=new PartyConstruction.Model.BranchInfo();
+			PartyConstruction.Model.DBActionInfo model=new PartyConstruction.Model.DBActionInfo();
 			if (row != null)
 			{
 				if(row["ID"]!=null && row["ID"].ToString()!="")
 				{
 					model.ID=int.Parse(row["ID"].ToString());
 				}
-				if(row["Name"]!=null)
+				if(row["BeginTime"]!=null && row["BeginTime"].ToString()!="")
 				{
-					model.Name=row["Name"].ToString();
+					model.BeginTime=DateTime.Parse(row["BeginTime"].ToString());
 				}
-				if(row["ParentBranchID"]!=null && row["ParentBranchID"].ToString()!="")
+				if(row["EndTime"]!=null && row["EndTime"].ToString()!="")
 				{
-					model.ParentBranchID=int.Parse(row["ParentBranchID"].ToString());
+					model.EndTime=DateTime.Parse(row["EndTime"].ToString());
+				}
+				if(row["Title"]!=null)
+				{
+					model.Title=row["Title"].ToString();
+				}
+				if(row["Content"]!=null)
+				{
+					model.Content=row["Content"].ToString();
+				}
+				if(row["BranchID"]!=null && row["BranchID"].ToString()!="")
+				{
+					model.BranchID=int.Parse(row["BranchID"].ToString());
 				}
 			}
 			return model;
@@ -210,8 +221,8 @@ namespace PartyConstruction.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select ID,Name,ParentBranchID ");
-			strSql.Append(" FROM BranchInfo ");
+			strSql.Append("select ID,BeginTime,EndTime,Title,Content,BranchID ");
+			strSql.Append(" FROM ActionInfo ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -219,6 +230,27 @@ namespace PartyConstruction.DAL
 			return DbHelperSQLite.Query(strSql.ToString());
 		}
 
+		/// <summary>
+		/// 获取记录总数
+		/// </summary>
+		public int GetRecordCount(string strWhere)
+		{
+			StringBuilder strSql=new StringBuilder();
+			strSql.Append("select count(1) FROM ActionInfo ");
+			if(strWhere.Trim()!="")
+			{
+				strSql.Append(" where "+strWhere);
+			}
+			object obj = DbHelperSQL.GetSingle(strSql.ToString());
+			if (obj == null)
+			{
+				return 0;
+			}
+			else
+			{
+				return Convert.ToInt32(obj);
+			}
+		}
 		/// <summary>
 		/// 分页获取数据列表
 		/// </summary>
@@ -235,7 +267,7 @@ namespace PartyConstruction.DAL
 			{
 				strSql.Append("order by T.ID desc");
 			}
-			strSql.Append(")AS Row, T.*  from BranchInfo T ");
+			strSql.Append(")AS Row, T.*  from ActionInfo T ");
 			if (!string.IsNullOrEmpty(strWhere.Trim()))
 			{
 				strSql.Append(" WHERE " + strWhere);
@@ -260,7 +292,7 @@ namespace PartyConstruction.DAL
 					new SQLiteParameter("@OrderType", DbType.bit),
 					new SQLiteParameter("@strWhere", DbType.VarChar,1000),
 					};
-			parameters[0].Value = "BranchInfo";
+			parameters[0].Value = "ActionInfo";
 			parameters[1].Value = "ID";
 			parameters[2].Value = PageSize;
 			parameters[3].Value = PageIndex;
