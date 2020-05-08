@@ -78,37 +78,33 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Lib\Maticsoft.Common.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Lib\System.Data.SQLite.DLL">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Lib\Maticsoft.Common.dll" />
+    <Content Include="Lib\System.Data.SQLite.DLL" />
     <Content Include="Login.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BLL\ActionInfoBLL.cs" />
-    <Compile Include="BLL\BranchInfoBLL.cs" />
-    <Compile Include="BLL\ScoreInfoBLL.cs" />
+    <Compile Include="BLL\ActionBLL.cs" />
+    <Compile Include="BLL\BranchBLL.cs" />
+    <Compile Include="BLL\ScoreBLL.cs" />
     <Compile Include="BLL\UserActionDataBLL.cs" />
-    <Compile Include="BLL\UserInfoBLL.cs" />
+    <Compile Include="BLL\UserBLL.cs" />
     <Compile Include="Controlers\LoginHandler.ashx.cs">
       <DependentUpon>LoginHandler.ashx</DependentUpon>
     </Compile>
-    <Compile Include="DAL\ActionInfoDAL.cs" />
-    <Compile Include="DAL\BranchInfoDAL.cs" />
-    <Compile Include="DAL\ScoreInfoDAL.cs" />
+    <Compile Include="DAL\ActionDAL.cs" />
+    <Compile Include="DAL\BranchDAL.cs" />
+    <Compile Include="DAL\ScoreDAL.cs" />
     <Compile Include="DAL\UserActionDataDAL.cs" />
-    <Compile Include="DAL\UserInfoDAL.cs" />
+    <Compile Include="DAL\UserDAL.cs" />
     <Compile Include="DBUtility\CommandInfo.cs" />
     <Compile Include="DBUtility\DbHelperSQL.cs" />
     <Compile Include="DBUtility\DbHelperSQLite.cs" />
-    <Compile Include="Model\DBActionInfo.cs" />
-    <Compile Include="Model\DBBranchInfo.cs" />
-    <Compile Include="Model\DBScoreInfo.cs" />
+    <Compile Include="Model\DBAction.cs" />
+    <Compile Include="Model\DBBranch.cs" />
+    <Compile Include="Model\DBScore.cs" />
+    <Compile Include="Model\DBUser.cs" />
     <Compile Include="Model\DBUserActionData.cs" />
-    <Compile Include="Model\DBUserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

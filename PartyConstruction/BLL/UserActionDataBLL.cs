@@ -1,4 +1,20 @@
-﻿using System;
+﻿/**  版本信息模板在安装目录下，可自行修改。
+* UserActionDataBLL.cs
+*
+* 功 能： N/A
+* 类 名： UserActionDataBLL
+*
+* Ver    变更日期             负责人  变更内容
+* ───────────────────────────────────
+* V0.01  2020/5/8 星期五 下午 5:08:35   N/A    初版
+*
+* Copyright (c) 2012 Maticsoft Corporation. All rights reserved.
+*┌──────────────────────────────────┐
+*│　此技术信息为本公司机密信息，未经本公司书面同意禁止向第三方披露．　│
+*│　版权所有：动软卓越（北京）科技有限公司　　　　　　　　　　　　　　│
+*└──────────────────────────────────┘
+*/
+using System;
 using System.Data;
 using System.Collections.Generic;
 using Maticsoft.Common;
@@ -14,19 +30,10 @@ namespace PartyConstruction.BLL
 		public UserActionDataBLL()
 		{}
 		#region  BasicMethod
-
-		/// <summary>
-		/// 得到最大ID
-		/// </summary>
-		public int GetMaxId()
-		{
-			return dal.GetMaxId();
-		}
-
 		/// <summary>
 		/// 是否存在该记录
 		/// </summary>
-		public bool Exists(int ID)
+		public bool Exists(string ID)
 		{
 			return dal.Exists(ID);
 		}
@@ -50,7 +57,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
-		public bool Delete(int ID)
+		public bool Delete(string ID)
 		{
 			
 			return dal.Delete(ID);
@@ -66,7 +73,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public PartyConstruction.Model.DBUserActionData GetModel(int ID)
+		public PartyConstruction.Model.DBUserActionData GetModel(string ID)
 		{
 			
 			return dal.GetModel(ID);
@@ -75,7 +82,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 得到一个对象实体，从缓存中
 		/// </summary>
-		public PartyConstruction.Model.DBUserActionData GetModelByCache(int ID)
+		public PartyConstruction.Model.DBUserActionData GetModelByCache(string ID)
 		{
 			
 			string CacheKey = "DBUserActionDataModel-" + ID;

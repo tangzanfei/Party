@@ -1,27 +1,43 @@
-﻿using System;
+﻿/**  版本信息模板在安装目录下，可自行修改。
+* DBUser.cs
+*
+* 功 能： N/A
+* 类 名： DBUser
+*
+* Ver    变更日期             负责人  变更内容
+* ───────────────────────────────────
+* V0.01  2020/5/8 星期五 下午 5:08:35   N/A    初版
+*
+* Copyright (c) 2012 Maticsoft Corporation. All rights reserved.
+*┌──────────────────────────────────┐
+*│　此技术信息为本公司机密信息，未经本公司书面同意禁止向第三方披露．　│
+*│　版权所有：动软卓越（北京）科技有限公司　　　　　　　　　　　　　　│
+*└──────────────────────────────────┘
+*/
+using System;
 namespace PartyConstruction.Model
 {
 	/// <summary>
-	/// DBUserInfo:实体类(属性说明自动提取数据库字段的描述信息)
+	/// DBUser:实体类(属性说明自动提取数据库字段的描述信息)
 	/// </summary>
 	[Serializable]
-	public partial class DBUserInfo
+	public partial class DBUser
 	{
-		public DBUserInfo()
+		public DBUser()
 		{}
 		#region Model
-		private int _id;
+		private string _id;
 		private string _name;
 		private bool _isbranchmaster= false;
 		private bool _ismanager= false;
-		private int? _branchid;
+		private string _branchid;
 		private string _account;
 		private string _password;
-		private int? _servicingbranchid;
+		private string _servicingbranchid;
 		/// <summary>
 		/// 
 		/// </summary>
-		public int ID
+		public string ID
 		{
 			set{ _id=value;}
 			get{return _id;}
@@ -53,7 +69,7 @@ namespace PartyConstruction.Model
 		/// <summary>
 		/// 
 		/// </summary>
-		public int? BranchID
+		public string BranchID
 		{
 			set{ _branchid=value;}
 			get{return _branchid;}
@@ -77,7 +93,7 @@ namespace PartyConstruction.Model
 		/// <summary>
 		/// 
 		/// </summary>
-		public int? ServicingBranchID
+		public string ServicingBranchID
 		{
 			set{ _servicingbranchid=value;}
 			get{return _servicingbranchid;}

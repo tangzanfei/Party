@@ -1,8 +1,8 @@
 ﻿/**  版本信息模板在安装目录下，可自行修改。
-* DBUserActionData.cs
+* DBScore.cs
 *
 * 功 能： N/A
-* 类 名： DBUserActionData
+* 类 名： DBScore
 *
 * Ver    变更日期             负责人  变更内容
 * ───────────────────────────────────
@@ -18,19 +18,19 @@ using System;
 namespace PartyConstruction.Model
 {
 	/// <summary>
-	/// DBUserActionData:实体类(属性说明自动提取数据库字段的描述信息)
+	/// DBScore:实体类(属性说明自动提取数据库字段的描述信息)
 	/// </summary>
 	[Serializable]
-	public partial class DBUserActionData
+	public partial class DBScore
 	{
-		public DBUserActionData()
+		public DBScore()
 		{}
 		#region Model
 		private string _id;
-		private string _actionid;
 		private string _userid;
-		private bool _managerconfirmed= false;
-		private string _managerid;
+		private DateTime? _datetime;
+		private int _scorediff=0;
+		private string _note;
 		/// <summary>
 		/// 
 		/// </summary>
@@ -38,14 +38,6 @@ namespace PartyConstruction.Model
 		{
 			set{ _id=value;}
 			get{return _id;}
-		}
-		/// <summary>
-		/// 
-		/// </summary>
-		public string ActionID
-		{
-			set{ _actionid=value;}
-			get{return _actionid;}
 		}
 		/// <summary>
 		/// 
@@ -58,18 +50,26 @@ namespace PartyConstruction.Model
 		/// <summary>
 		/// 
 		/// </summary>
-		public bool ManagerConfirmed
+		public DateTime? DateTime
 		{
-			set{ _managerconfirmed=value;}
-			get{return _managerconfirmed;}
+			set{ _datetime=value;}
+			get{return _datetime;}
 		}
 		/// <summary>
 		/// 
 		/// </summary>
-		public string ManagerID
+		public int ScoreDiff
 		{
-			set{ _managerid=value;}
-			get{return _managerid;}
+			set{ _scorediff=value;}
+			get{return _scorediff;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public string Note
+		{
+			set{ _note=value;}
+			get{return _note;}
 		}
 		#endregion Model
 

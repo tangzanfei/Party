@@ -1,4 +1,20 @@
-﻿using System;
+﻿/**  版本信息模板在安装目录下，可自行修改。
+* UserBLL.cs
+*
+* 功 能： N/A
+* 类 名： UserBLL
+*
+* Ver    变更日期             负责人  变更内容
+* ───────────────────────────────────
+* V0.01  2020/5/8 星期五 下午 5:08:35   N/A    初版
+*
+* Copyright (c) 2012 Maticsoft Corporation. All rights reserved.
+*┌──────────────────────────────────┐
+*│　此技术信息为本公司机密信息，未经本公司书面同意禁止向第三方披露．　│
+*│　版权所有：动软卓越（北京）科技有限公司　　　　　　　　　　　　　　│
+*└──────────────────────────────────┘
+*/
+using System;
 using System.Data;
 using System.Collections.Generic;
 using Maticsoft.Common;
@@ -6,27 +22,18 @@ using PartyConstruction.Model;
 namespace PartyConstruction.BLL
 {
 	/// <summary>
-	/// UserInfoBLL
+	/// UserBLL
 	/// </summary>
-	public partial class UserInfoBLL
+	public partial class UserBLL
 	{
-		private readonly PartyConstruction.DAL.UserInfoDAL dal=new PartyConstruction.DAL.UserInfoDAL();
-		public UserInfoBLL()
+		private readonly PartyConstruction.DAL.UserDAL dal=new PartyConstruction.DAL.UserDAL();
+		public UserBLL()
 		{}
 		#region  BasicMethod
-
-		/// <summary>
-		/// 得到最大ID
-		/// </summary>
-		public int GetMaxId()
-		{
-			return dal.GetMaxId();
-		}
-
 		/// <summary>
 		/// 是否存在该记录
 		/// </summary>
-		public bool Exists(int ID)
+		public bool Exists(string ID)
 		{
 			return dal.Exists(ID);
 		}
@@ -34,7 +41,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public bool Add(PartyConstruction.Model.DBUserInfo model)
+		public bool Add(PartyConstruction.Model.DBUser model)
 		{
 			return dal.Add(model);
 		}
@@ -42,7 +49,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(PartyConstruction.Model.DBUserInfo model)
+		public bool Update(PartyConstruction.Model.DBUser model)
 		{
 			return dal.Update(model);
 		}
@@ -50,7 +57,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
-		public bool Delete(int ID)
+		public bool Delete(string ID)
 		{
 			
 			return dal.Delete(ID);
@@ -66,7 +73,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public PartyConstruction.Model.DBUserInfo GetModel(int ID)
+		public PartyConstruction.Model.DBUser GetModel(string ID)
 		{
 			
 			return dal.GetModel(ID);
@@ -75,10 +82,10 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 得到一个对象实体，从缓存中
 		/// </summary>
-		public PartyConstruction.Model.DBUserInfo GetModelByCache(int ID)
+		public PartyConstruction.Model.DBUser GetModelByCache(string ID)
 		{
 			
-			string CacheKey = "DBUserInfoModel-" + ID;
+			string CacheKey = "DBUserModel-" + ID;
 			object objModel = Maticsoft.Common.DataCache.GetCache(CacheKey);
 			if (objModel == null)
 			{
@@ -93,7 +100,7 @@ namespace PartyConstruction.BLL
 				}
 				catch{}
 			}
-			return (PartyConstruction.Model.DBUserInfo)objModel;
+			return (PartyConstruction.Model.DBUser)objModel;
 		}
 
 		/// <summary>
@@ -106,7 +113,7 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<PartyConstruction.Model.DBUserInfo> GetModelList(string strWhere)
+		public List<PartyConstruction.Model.DBUser> GetModelList(string strWhere)
 		{
 			DataSet ds = dal.GetList(strWhere);
 			return DataTableToList(ds.Tables[0]);
@@ -114,13 +121,13 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<PartyConstruction.Model.DBUserInfo> DataTableToList(DataTable dt)
+		public List<PartyConstruction.Model.DBUser> DataTableToList(DataTable dt)
 		{
-			List<PartyConstruction.Model.DBUserInfo> modelList = new List<PartyConstruction.Model.DBUserInfo>();
+			List<PartyConstruction.Model.DBUser> modelList = new List<PartyConstruction.Model.DBUser>();
 			int rowsCount = dt.Rows.Count;
 			if (rowsCount > 0)
 			{
-				PartyConstruction.Model.DBUserInfo model;
+				PartyConstruction.Model.DBUser model;
 				for (int n = 0; n < rowsCount; n++)
 				{
 					model = dal.DataRowToModel(dt.Rows[n]);

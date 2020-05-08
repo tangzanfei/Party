@@ -1,4 +1,20 @@
-﻿using System;
+﻿/**  版本信息模板在安装目录下，可自行修改。
+* ScoreDAL.cs
+*
+* 功 能： N/A
+* 类 名： ScoreDAL
+*
+* Ver    变更日期             负责人  变更内容
+* ───────────────────────────────────
+* V0.01  2020/5/8 星期五 下午 5:08:35   N/A    初版
+*
+* Copyright (c) 2012 Maticsoft Corporation. All rights reserved.
+*┌──────────────────────────────────┐
+*│　此技术信息为本公司机密信息，未经本公司书面同意禁止向第三方披露．　│
+*│　版权所有：动软卓越（北京）科技有限公司　　　　　　　　　　　　　　│
+*└──────────────────────────────────┘
+*/
+using System;
 using System.Data;
 using System.Text;
 using System.Data.SQLite;
@@ -6,32 +22,24 @@ using Maticsoft.DBUtility;//Please add references
 namespace PartyConstruction.DAL
 {
 	/// <summary>
-	/// 数据访问类:UserInfoDAL
+	/// 数据访问类:ScoreDAL
 	/// </summary>
-	public partial class UserInfoDAL
+	public partial class ScoreDAL
 	{
-		public UserInfoDAL()
+		public ScoreDAL()
 		{}
 		#region  BasicMethod
 
 		/// <summary>
-		/// 得到最大ID
-		/// </summary>
-		public int GetMaxId()
-		{
-		return DbHelperSQLite.GetMaxID("ID", "UserInfo"); 
-		}
-
-		/// <summary>
 		/// 是否存在该记录
 		/// </summary>
-		public bool Exists(int ID)
+		public bool Exists(string ID)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) from UserInfo");
+			strSql.Append("select count(1) from ScoreInfo");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
-					new SQLiteParameter("@ID", DbType.Int32,8)			};
+					new SQLiteParameter("@ID", DbType.String,2147483647)			};
 			parameters[0].Value = ID;
 
 			return DbHelperSQLite.Exists(strSql.ToString(),parameters);
@@ -41,30 +49,24 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public bool Add(PartyConstruction.Model.DBUserInfo model)
+		public bool Add(PartyConstruction.Model.DBScore model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("insert into UserInfo(");
-			strSql.Append("ID,Name,IsBranchMaster,IsManager,BranchID,Account,Password,ServicingBranchID)");
+			strSql.Append("insert into ScoreInfo(");
+			strSql.Append("ID,UserID,DateTime,ScoreDiff,Note)");
 			strSql.Append(" values (");
-			strSql.Append("@ID,@Name,@IsBranchMaster,@IsManager,@BranchID,@Account,@Password,@ServicingBranchID)");
+			strSql.Append("@ID,@UserID,@DateTime,@ScoreDiff,@Note)");
 			SQLiteParameter[] parameters = {
-					new SQLiteParameter("@ID", DbType.Int32,8),
-					new SQLiteParameter("@Name", DbType.String,2147483647),
-					new SQLiteParameter("@IsBranchMaster", DbType.Boolean),
-					new SQLiteParameter("@IsManager", DbType.Boolean),
-					new SQLiteParameter("@BranchID", DbType.Int32,8),
-					new SQLiteParameter("@Account", DbType.String,2147483647),
-					new SQLiteParameter("@Password", DbType.String,2147483647),
-					new SQLiteParameter("@ServicingBranchID", DbType.Int32,8)};
+					new SQLiteParameter("@ID", DbType.String,2147483647),
+					new SQLiteParameter("@UserID", DbType.String,2147483647),
+					new SQLiteParameter("@DateTime", DbType.DateTime),
+					new SQLiteParameter("@ScoreDiff", DbType.Int32,8),
+					new SQLiteParameter("@Note", DbType.String,2147483647)};
 			parameters[0].Value = model.ID;
-			parameters[1].Value = model.Name;
-			parameters[2].Value = model.IsBranchMaster;
-			parameters[3].Value = model.IsManager;
-			parameters[4].Value = model.BranchID;
-			parameters[5].Value = model.Account;
-			parameters[6].Value = model.Password;
-			parameters[7].Value = model.ServicingBranchID;
+			parameters[1].Value = model.UserID;
+			parameters[2].Value = model.DateTime;
+			parameters[3].Value = model.ScoreDiff;
+			parameters[4].Value = model.Note;
 
 			int rows=DbHelperSQLite.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -79,35 +81,26 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(PartyConstruction.Model.DBUserInfo model)
+		public bool Update(PartyConstruction.Model.DBScore model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("update UserInfo set ");
-			strSql.Append("Name=@Name,");
-			strSql.Append("IsBranchMaster=@IsBranchMaster,");
-			strSql.Append("IsManager=@IsManager,");
-			strSql.Append("BranchID=@BranchID,");
-			strSql.Append("Account=@Account,");
-			strSql.Append("Password=@Password,");
-			strSql.Append("ServicingBranchID=@ServicingBranchID");
+			strSql.Append("update ScoreInfo set ");
+			strSql.Append("UserID=@UserID,");
+			strSql.Append("DateTime=@DateTime,");
+			strSql.Append("ScoreDiff=@ScoreDiff,");
+			strSql.Append("Note=@Note");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
-					new SQLiteParameter("@Name", DbType.String,2147483647),
-					new SQLiteParameter("@IsBranchMaster", DbType.Boolean),
-					new SQLiteParameter("@IsManager", DbType.Boolean),
-					new SQLiteParameter("@BranchID", DbType.Int32,8),
-					new SQLiteParameter("@Account", DbType.String,2147483647),
-					new SQLiteParameter("@Password", DbType.String,2147483647),
-					new SQLiteParameter("@ServicingBranchID", DbType.Int32,8),
-					new SQLiteParameter("@ID", DbType.Int32,8)};
-			parameters[0].Value = model.Name;
-			parameters[1].Value = model.IsBranchMaster;
-			parameters[2].Value = model.IsManager;
-			parameters[3].Value = model.BranchID;
-			parameters[4].Value = model.Account;
-			parameters[5].Value = model.Password;
-			parameters[6].Value = model.ServicingBranchID;
-			parameters[7].Value = model.ID;
+					new SQLiteParameter("@UserID", DbType.String,2147483647),
+					new SQLiteParameter("@DateTime", DbType.DateTime),
+					new SQLiteParameter("@ScoreDiff", DbType.Int32,8),
+					new SQLiteParameter("@Note", DbType.String,2147483647),
+					new SQLiteParameter("@ID", DbType.String,2147483647)};
+			parameters[0].Value = model.UserID;
+			parameters[1].Value = model.DateTime;
+			parameters[2].Value = model.ScoreDiff;
+			parameters[3].Value = model.Note;
+			parameters[4].Value = model.ID;
 
 			int rows=DbHelperSQLite.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -123,14 +116,14 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
-		public bool Delete(int ID)
+		public bool Delete(string ID)
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from UserInfo ");
+			strSql.Append("delete from ScoreInfo ");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
-					new SQLiteParameter("@ID", DbType.Int32,8)			};
+					new SQLiteParameter("@ID", DbType.String,2147483647)			};
 			parameters[0].Value = ID;
 
 			int rows=DbHelperSQLite.ExecuteSql(strSql.ToString(),parameters);
@@ -149,7 +142,7 @@ namespace PartyConstruction.DAL
 		public bool DeleteList(string IDlist )
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from UserInfo ");
+			strSql.Append("delete from ScoreInfo ");
 			strSql.Append(" where ID in ("+IDlist + ")  ");
 			int rows=DbHelperSQLite.ExecuteSql(strSql.ToString());
 			if (rows > 0)
@@ -166,17 +159,17 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public PartyConstruction.Model.DBUserInfo GetModel(int ID)
+		public PartyConstruction.Model.DBScore GetModel(string ID)
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select ID,Name,IsBranchMaster,IsManager,BranchID,Account,Password,ServicingBranchID from UserInfo ");
+			strSql.Append("select ID,UserID,DateTime,ScoreDiff,Note from ScoreInfo ");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
-					new SQLiteParameter("@ID", DbType.Int32,8)			};
+					new SQLiteParameter("@ID", DbType.String,2147483647)			};
 			parameters[0].Value = ID;
 
-			PartyConstruction.Model.DBUserInfo model=new PartyConstruction.Model.DBUserInfo();
+			PartyConstruction.Model.DBScore model=new PartyConstruction.Model.DBScore();
 			DataSet ds=DbHelperSQLite.Query(strSql.ToString(),parameters);
 			if(ds.Tables[0].Rows.Count>0)
 			{
@@ -192,56 +185,30 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public PartyConstruction.Model.DBUserInfo DataRowToModel(DataRow row)
+		public PartyConstruction.Model.DBScore DataRowToModel(DataRow row)
 		{
-			PartyConstruction.Model.DBUserInfo model=new PartyConstruction.Model.DBUserInfo();
+			PartyConstruction.Model.DBScore model=new PartyConstruction.Model.DBScore();
 			if (row != null)
 			{
-				if(row["ID"]!=null && row["ID"].ToString()!="")
+				if(row["ID"]!=null)
 				{
-					model.ID=int.Parse(row["ID"].ToString());
+					model.ID=row["ID"].ToString();
 				}
-				if(row["Name"]!=null)
+				if(row["UserID"]!=null)
 				{
-					model.Name=row["Name"].ToString();
+					model.UserID=row["UserID"].ToString();
 				}
-				if(row["IsBranchMaster"]!=null && row["IsBranchMaster"].ToString()!="")
+				if(row["DateTime"]!=null && row["DateTime"].ToString()!="")
 				{
-					if((row["IsBranchMaster"].ToString()=="1")||(row["IsBranchMaster"].ToString().ToLower()=="true"))
-					{
-						model.IsBranchMaster=true;
-					}
-					else
-					{
-						model.IsBranchMaster=false;
-					}
+					model.DateTime=DateTime.Parse(row["DateTime"].ToString());
 				}
-				if(row["IsManager"]!=null && row["IsManager"].ToString()!="")
+				if(row["ScoreDiff"]!=null && row["ScoreDiff"].ToString()!="")
 				{
-					if((row["IsManager"].ToString()=="1")||(row["IsManager"].ToString().ToLower()=="true"))
-					{
-						model.IsManager=true;
-					}
-					else
-					{
-						model.IsManager=false;
-					}
+					model.ScoreDiff=int.Parse(row["ScoreDiff"].ToString());
 				}
-				if(row["BranchID"]!=null && row["BranchID"].ToString()!="")
+				if(row["Note"]!=null)
 				{
-					model.BranchID=int.Parse(row["BranchID"].ToString());
-				}
-				if(row["Account"]!=null)
-				{
-					model.Account=row["Account"].ToString();
-				}
-				if(row["Password"]!=null)
-				{
-					model.Password=row["Password"].ToString();
-				}
-				if(row["ServicingBranchID"]!=null && row["ServicingBranchID"].ToString()!="")
-				{
-					model.ServicingBranchID=int.Parse(row["ServicingBranchID"].ToString());
+					model.Note=row["Note"].ToString();
 				}
 			}
 			return model;
@@ -253,8 +220,8 @@ namespace PartyConstruction.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select ID,Name,IsBranchMaster,IsManager,BranchID,Account,Password,ServicingBranchID ");
-			strSql.Append(" FROM UserInfo ");
+			strSql.Append("select ID,UserID,DateTime,ScoreDiff,Note ");
+			strSql.Append(" FROM ScoreInfo ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -268,7 +235,7 @@ namespace PartyConstruction.DAL
 		public int GetRecordCount(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) FROM UserInfo ");
+			strSql.Append("select count(1) FROM ScoreInfo ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -299,7 +266,7 @@ namespace PartyConstruction.DAL
 			{
 				strSql.Append("order by T.ID desc");
 			}
-			strSql.Append(")AS Row, T.*  from UserInfo T ");
+			strSql.Append(")AS Row, T.*  from ScoreInfo T ");
 			if (!string.IsNullOrEmpty(strWhere.Trim()))
 			{
 				strSql.Append(" WHERE " + strWhere);
@@ -324,7 +291,7 @@ namespace PartyConstruction.DAL
 					new SQLiteParameter("@OrderType", DbType.bit),
 					new SQLiteParameter("@strWhere", DbType.VarChar,1000),
 					};
-			parameters[0].Value = "UserInfo";
+			parameters[0].Value = "ScoreInfo";
 			parameters[1].Value = "ID";
 			parameters[2].Value = PageSize;
 			parameters[3].Value = PageIndex;

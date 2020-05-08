@@ -1,8 +1,8 @@
 ﻿/**  版本信息模板在安装目录下，可自行修改。
-* DBUserActionData.cs
+* DBAction.cs
 *
 * 功 能： N/A
-* 类 名： DBUserActionData
+* 类 名： DBAction
 *
 * Ver    变更日期             负责人  变更内容
 * ───────────────────────────────────
@@ -18,19 +18,20 @@ using System;
 namespace PartyConstruction.Model
 {
 	/// <summary>
-	/// DBUserActionData:实体类(属性说明自动提取数据库字段的描述信息)
+	/// DBAction:实体类(属性说明自动提取数据库字段的描述信息)
 	/// </summary>
 	[Serializable]
-	public partial class DBUserActionData
+	public partial class DBAction
 	{
-		public DBUserActionData()
+		public DBAction()
 		{}
 		#region Model
 		private string _id;
-		private string _actionid;
-		private string _userid;
-		private bool _managerconfirmed= false;
-		private string _managerid;
+		private DateTime? _begintime;
+		private DateTime? _endtime;
+		private string _title;
+		private string _content;
+		private int? _branchid;
 		/// <summary>
 		/// 
 		/// </summary>
@@ -42,34 +43,42 @@ namespace PartyConstruction.Model
 		/// <summary>
 		/// 
 		/// </summary>
-		public string ActionID
+		public DateTime? BeginTime
 		{
-			set{ _actionid=value;}
-			get{return _actionid;}
+			set{ _begintime=value;}
+			get{return _begintime;}
 		}
 		/// <summary>
 		/// 
 		/// </summary>
-		public string UserID
+		public DateTime? EndTime
 		{
-			set{ _userid=value;}
-			get{return _userid;}
+			set{ _endtime=value;}
+			get{return _endtime;}
 		}
 		/// <summary>
 		/// 
 		/// </summary>
-		public bool ManagerConfirmed
+		public string Title
 		{
-			set{ _managerconfirmed=value;}
-			get{return _managerconfirmed;}
+			set{ _title=value;}
+			get{return _title;}
 		}
 		/// <summary>
 		/// 
 		/// </summary>
-		public string ManagerID
+		public string Content
 		{
-			set{ _managerid=value;}
-			get{return _managerid;}
+			set{ _content=value;}
+			get{return _content;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public int? BranchID
+		{
+			set{ _branchid=value;}
+			get{return _branchid;}
 		}
 		#endregion Model
 

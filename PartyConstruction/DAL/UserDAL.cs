@@ -1,8 +1,8 @@
 ﻿/**  版本信息模板在安装目录下，可自行修改。
-* UserActionDataDAL.cs
+* UserDAL.cs
 *
 * 功 能： N/A
-* 类 名： UserActionDataDAL
+* 类 名： UserDAL
 *
 * Ver    变更日期             负责人  变更内容
 * ───────────────────────────────────
@@ -22,11 +22,11 @@ using Maticsoft.DBUtility;//Please add references
 namespace PartyConstruction.DAL
 {
 	/// <summary>
-	/// 数据访问类:UserActionDataDAL
+	/// 数据访问类:UserDAL
 	/// </summary>
-	public partial class UserActionDataDAL
+	public partial class UserDAL
 	{
-		public UserActionDataDAL()
+		public UserDAL()
 		{}
 		#region  BasicMethod
 
@@ -36,7 +36,7 @@ namespace PartyConstruction.DAL
 		public bool Exists(string ID)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) from UserActionData");
+			strSql.Append("select count(1) from UserInfo");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
 					new SQLiteParameter("@ID", DbType.String,2147483647)			};
@@ -49,24 +49,30 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public bool Add(PartyConstruction.Model.DBUserActionData model)
+		public bool Add(PartyConstruction.Model.DBUser model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("insert into UserActionData(");
-			strSql.Append("ID,ActionID,UserID,ManagerConfirmed,ManagerID)");
+			strSql.Append("insert into UserInfo(");
+			strSql.Append("ID,Name,IsBranchMaster,IsManager,BranchID,Account,Password,ServicingBranchID)");
 			strSql.Append(" values (");
-			strSql.Append("@ID,@ActionID,@UserID,@ManagerConfirmed,@ManagerID)");
+			strSql.Append("@ID,@Name,@IsBranchMaster,@IsManager,@BranchID,@Account,@Password,@ServicingBranchID)");
 			SQLiteParameter[] parameters = {
 					new SQLiteParameter("@ID", DbType.String,2147483647),
-					new SQLiteParameter("@ActionID", DbType.String,2147483647),
-					new SQLiteParameter("@UserID", DbType.String,2147483647),
-					new SQLiteParameter("@ManagerConfirmed", DbType.Boolean),
-					new SQLiteParameter("@ManagerID", DbType.String,2147483647)};
+					new SQLiteParameter("@Name", DbType.String,2147483647),
+					new SQLiteParameter("@IsBranchMaster", DbType.Boolean),
+					new SQLiteParameter("@IsManager", DbType.Boolean),
+					new SQLiteParameter("@BranchID", DbType.String,2147483647),
+					new SQLiteParameter("@Account", DbType.String,2147483647),
+					new SQLiteParameter("@Password", DbType.String,2147483647),
+					new SQLiteParameter("@ServicingBranchID", DbType.String,2147483647)};
 			parameters[0].Value = model.ID;
-			parameters[1].Value = model.ActionID;
-			parameters[2].Value = model.UserID;
-			parameters[3].Value = model.ManagerConfirmed;
-			parameters[4].Value = model.ManagerID;
+			parameters[1].Value = model.Name;
+			parameters[2].Value = model.IsBranchMaster;
+			parameters[3].Value = model.IsManager;
+			parameters[4].Value = model.BranchID;
+			parameters[5].Value = model.Account;
+			parameters[6].Value = model.Password;
+			parameters[7].Value = model.ServicingBranchID;
 
 			int rows=DbHelperSQLite.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -81,26 +87,35 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(PartyConstruction.Model.DBUserActionData model)
+		public bool Update(PartyConstruction.Model.DBUser model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("update UserActionData set ");
-			strSql.Append("ActionID=@ActionID,");
-			strSql.Append("UserID=@UserID,");
-			strSql.Append("ManagerConfirmed=@ManagerConfirmed,");
-			strSql.Append("ManagerID=@ManagerID");
+			strSql.Append("update UserInfo set ");
+			strSql.Append("Name=@Name,");
+			strSql.Append("IsBranchMaster=@IsBranchMaster,");
+			strSql.Append("IsManager=@IsManager,");
+			strSql.Append("BranchID=@BranchID,");
+			strSql.Append("Account=@Account,");
+			strSql.Append("Password=@Password,");
+			strSql.Append("ServicingBranchID=@ServicingBranchID");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
-					new SQLiteParameter("@ActionID", DbType.String,2147483647),
-					new SQLiteParameter("@UserID", DbType.String,2147483647),
-					new SQLiteParameter("@ManagerConfirmed", DbType.Boolean),
-					new SQLiteParameter("@ManagerID", DbType.String,2147483647),
+					new SQLiteParameter("@Name", DbType.String,2147483647),
+					new SQLiteParameter("@IsBranchMaster", DbType.Boolean),
+					new SQLiteParameter("@IsManager", DbType.Boolean),
+					new SQLiteParameter("@BranchID", DbType.String,2147483647),
+					new SQLiteParameter("@Account", DbType.String,2147483647),
+					new SQLiteParameter("@Password", DbType.String,2147483647),
+					new SQLiteParameter("@ServicingBranchID", DbType.String,2147483647),
 					new SQLiteParameter("@ID", DbType.String,2147483647)};
-			parameters[0].Value = model.ActionID;
-			parameters[1].Value = model.UserID;
-			parameters[2].Value = model.ManagerConfirmed;
-			parameters[3].Value = model.ManagerID;
-			parameters[4].Value = model.ID;
+			parameters[0].Value = model.Name;
+			parameters[1].Value = model.IsBranchMaster;
+			parameters[2].Value = model.IsManager;
+			parameters[3].Value = model.BranchID;
+			parameters[4].Value = model.Account;
+			parameters[5].Value = model.Password;
+			parameters[6].Value = model.ServicingBranchID;
+			parameters[7].Value = model.ID;
 
 			int rows=DbHelperSQLite.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -120,7 +135,7 @@ namespace PartyConstruction.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from UserActionData ");
+			strSql.Append("delete from UserInfo ");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
 					new SQLiteParameter("@ID", DbType.String,2147483647)			};
@@ -142,7 +157,7 @@ namespace PartyConstruction.DAL
 		public bool DeleteList(string IDlist )
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from UserActionData ");
+			strSql.Append("delete from UserInfo ");
 			strSql.Append(" where ID in ("+IDlist + ")  ");
 			int rows=DbHelperSQLite.ExecuteSql(strSql.ToString());
 			if (rows > 0)
@@ -159,17 +174,17 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public PartyConstruction.Model.DBUserActionData GetModel(string ID)
+		public PartyConstruction.Model.DBUser GetModel(string ID)
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select ID,ActionID,UserID,ManagerConfirmed,ManagerID from UserActionData ");
+			strSql.Append("select ID,Name,IsBranchMaster,IsManager,BranchID,Account,Password,ServicingBranchID from UserInfo ");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
 					new SQLiteParameter("@ID", DbType.String,2147483647)			};
 			parameters[0].Value = ID;
 
-			PartyConstruction.Model.DBUserActionData model=new PartyConstruction.Model.DBUserActionData();
+			PartyConstruction.Model.DBUser model=new PartyConstruction.Model.DBUser();
 			DataSet ds=DbHelperSQLite.Query(strSql.ToString(),parameters);
 			if(ds.Tables[0].Rows.Count>0)
 			{
@@ -185,37 +200,56 @@ namespace PartyConstruction.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public PartyConstruction.Model.DBUserActionData DataRowToModel(DataRow row)
+		public PartyConstruction.Model.DBUser DataRowToModel(DataRow row)
 		{
-			PartyConstruction.Model.DBUserActionData model=new PartyConstruction.Model.DBUserActionData();
+			PartyConstruction.Model.DBUser model=new PartyConstruction.Model.DBUser();
 			if (row != null)
 			{
 				if(row["ID"]!=null)
 				{
 					model.ID=row["ID"].ToString();
 				}
-				if(row["ActionID"]!=null)
+				if(row["Name"]!=null)
 				{
-					model.ActionID=row["ActionID"].ToString();
+					model.Name=row["Name"].ToString();
 				}
-				if(row["UserID"]!=null)
+				if(row["IsBranchMaster"]!=null && row["IsBranchMaster"].ToString()!="")
 				{
-					model.UserID=row["UserID"].ToString();
-				}
-				if(row["ManagerConfirmed"]!=null && row["ManagerConfirmed"].ToString()!="")
-				{
-					if((row["ManagerConfirmed"].ToString()=="1")||(row["ManagerConfirmed"].ToString().ToLower()=="true"))
+					if((row["IsBranchMaster"].ToString()=="1")||(row["IsBranchMaster"].ToString().ToLower()=="true"))
 					{
-						model.ManagerConfirmed=true;
+						model.IsBranchMaster=true;
 					}
 					else
 					{
-						model.ManagerConfirmed=false;
+						model.IsBranchMaster=false;
 					}
 				}
-				if(row["ManagerID"]!=null)
+				if(row["IsManager"]!=null && row["IsManager"].ToString()!="")
 				{
-					model.ManagerID=row["ManagerID"].ToString();
+					if((row["IsManager"].ToString()=="1")||(row["IsManager"].ToString().ToLower()=="true"))
+					{
+						model.IsManager=true;
+					}
+					else
+					{
+						model.IsManager=false;
+					}
+				}
+				if(row["BranchID"]!=null)
+				{
+					model.BranchID=row["BranchID"].ToString();
+				}
+				if(row["Account"]!=null)
+				{
+					model.Account=row["Account"].ToString();
+				}
+				if(row["Password"]!=null)
+				{
+					model.Password=row["Password"].ToString();
+				}
+				if(row["ServicingBranchID"]!=null)
+				{
+					model.ServicingBranchID=row["ServicingBranchID"].ToString();
 				}
 			}
 			return model;
@@ -227,8 +261,8 @@ namespace PartyConstruction.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select ID,ActionID,UserID,ManagerConfirmed,ManagerID ");
-			strSql.Append(" FROM UserActionData ");
+			strSql.Append("select ID,Name,IsBranchMaster,IsManager,BranchID,Account,Password,ServicingBranchID ");
+			strSql.Append(" FROM UserInfo ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -242,7 +276,7 @@ namespace PartyConstruction.DAL
 		public int GetRecordCount(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) FROM UserActionData ");
+			strSql.Append("select count(1) FROM UserInfo ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -273,7 +307,7 @@ namespace PartyConstruction.DAL
 			{
 				strSql.Append("order by T.ID desc");
 			}
-			strSql.Append(")AS Row, T.*  from UserActionData T ");
+			strSql.Append(")AS Row, T.*  from UserInfo T ");
 			if (!string.IsNullOrEmpty(strWhere.Trim()))
 			{
 				strSql.Append(" WHERE " + strWhere);
@@ -298,7 +332,7 @@ namespace PartyConstruction.DAL
 					new SQLiteParameter("@OrderType", DbType.bit),
 					new SQLiteParameter("@strWhere", DbType.VarChar,1000),
 					};
-			parameters[0].Value = "UserActionData";
+			parameters[0].Value = "UserInfo";
 			parameters[1].Value = "ID";
 			parameters[2].Value = PageSize;
 			parameters[3].Value = PageIndex;
