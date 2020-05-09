@@ -14,7 +14,28 @@ namespace PartyConstruction.Controlers
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
-            context.Response.Write("Hello World");
+
+            var request = context.Request;
+            var response = context.Response;
+            //try
+            //{
+            //    string id =request["ID"];
+            //    string pwd =request["PWD"];
+            //    DBUser user = new DBUser();
+            //    user.ID = Guid.NewGuid().ToString();
+            //    user.Account = id;
+            //    user.Password = pwd;
+
+            //    DbHelper.UserBLL.Add(user);
+
+            //}
+            //catch (Exception e)
+            //{
+            //    FileHelper.WriteLog(e);
+            //    response.Write(e);
+            //}
+
+
         }
 
         public bool IsReusable

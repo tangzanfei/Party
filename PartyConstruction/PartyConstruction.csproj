@@ -67,6 +67,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Controlers\Login.html" />
     <Content Include="Lib\PartyConstruction.db3" />
     <Content Include="Controlers\LoginHandler.ashx" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
@@ -98,6 +99,7 @@
     <Compile Include="DAL\UserActionDataDAL.cs" />
     <Compile Include="DAL\UserDAL.cs" />
     <Compile Include="DBUtility\CommandInfo.cs" />
+    <Compile Include="DBUtility\DbHelper.cs" />
     <Compile Include="DBUtility\DbHelperSQL.cs" />
     <Compile Include="DBUtility\DbHelperSQLite.cs" />
     <Compile Include="Model\DBAction.cs" />
@@ -105,6 +107,8 @@
     <Compile Include="Model\DBScore.cs" />
     <Compile Include="Model\DBUser.cs" />
     <Compile Include="Model\DBUserActionData.cs" />
+    <Compile Include="Model\FileHelper.cs" />
+    <Compile Include="Model\JsonHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
