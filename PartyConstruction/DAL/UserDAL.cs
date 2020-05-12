@@ -45,6 +45,17 @@ namespace PartyConstruction.DAL
 			return DbHelperSQLite.Exists(strSql.ToString(),parameters);
 		}
 
+		public bool ExistsAccount(string account)
+		{
+			StringBuilder strSql = new StringBuilder();
+			strSql.Append("select count(1) from UserInfo");
+			strSql.Append(" where Account=@ID ");
+			SQLiteParameter[] parameters = {
+					new SQLiteParameter("@ID", DbType.String,2147483647)            };
+			parameters[0].Value = account;
+
+			return DbHelperSQLite.Exists(strSql.ToString(), parameters);
+		}
 
 		/// <summary>
 		/// 增加一条数据
@@ -196,6 +207,27 @@ namespace PartyConstruction.DAL
 			}
 		}
 
+		public PartyConstruction.Model.DBUser GetModelByAccount(string account)
+		{
+
+			StringBuilder strSql = new StringBuilder();
+			strSql.Append("select ID,Name,IsBranchMaster,IsManager,BranchID,Account,Password,ServicingBranchID from UserInfo ");
+			strSql.Append(" where Account=@ID ");
+			SQLiteParameter[] parameters = {
+					new SQLiteParameter("@ID", DbType.String,2147483647)            };
+			parameters[0].Value = account;
+
+			PartyConstruction.Model.DBUser model = new PartyConstruction.Model.DBUser();
+			DataSet ds = DbHelperSQLite.Query(strSql.ToString(), parameters);
+			if (ds.Tables[0].Rows.Count > 0)
+			{
+				return DataRowToModel(ds.Tables[0].Rows[0]);
+			}
+			else
+			{
+				return null;
+			}
+		}
 
 		/// <summary>
 		/// 得到一个对象实体

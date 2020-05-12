@@ -24,11 +24,16 @@ namespace PartyConstruction.Controlers
             {
                 string id = request["ID"];
                 string pwd = request["PWD"];
-                //DBUser user = new DBUser();
-                //user.ID = Guid.NewGuid().ToString();
-                //user.Account = id;
-                //user.Password = pwd;
-                
+
+                string msg;
+                if(CheckLogin(id, pwd, out msg))
+                {
+
+                }
+                else
+                {
+                    response.Write(msg);
+                }
 
             }
             catch (Exception e)
@@ -36,8 +41,31 @@ namespace PartyConstruction.Controlers
                 FileHelper.WriteLog(e);
                 response.Write(e);
             }
+        }
 
 
+       
+        bool CheckLogin(string id,string pwd,out string msg)
+        {
+            msg = "";
+            var user = DbHelper.UserBLL.GetModelByAccount(id);
+            if (user==null)
+            {
+                msg = "用户不存在";
+                return false;
+            }
+            if (user.Password==pwd)
+            {
+                ServerHelper.LoginedAccount = user;
+
+                return true;
+            }
+            else
+            {
+                msg = "密码错误";
+                return false;
+
+            }
         }
 
         public bool IsReusable

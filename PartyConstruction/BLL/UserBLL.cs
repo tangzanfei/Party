@@ -33,9 +33,9 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 是否存在该记录
 		/// </summary>
-		public bool Exists(string ID)
+		public bool Exists(string account)
 		{
-			return dal.Exists(ID);
+			return dal.ExistsAccount(account);
 		}
 
 		/// <summary>
@@ -73,10 +73,10 @@ namespace PartyConstruction.BLL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public PartyConstruction.Model.DBUser GetModel(string ID)
+		public PartyConstruction.Model.DBUser GetModelByAccount(string account)
 		{
 			
-			return dal.GetModel(ID);
+			return dal.GetModelByAccount(account);
 		}
 
 		/// <summary>
