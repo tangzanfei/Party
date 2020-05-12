@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace PartyConstruction.Models
+namespace PartyConstruction.Helper
 {
     public static class FileHelper
     {

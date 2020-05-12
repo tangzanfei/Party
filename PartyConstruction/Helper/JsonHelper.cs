@@ -4,7 +4,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Data;
 
-namespace PartyConstruction.Models
+namespace PartyConstruction.Helper
 {
     /// <summary>
     /// JSON帮助类
@@ -33,9 +33,7 @@ namespace PartyConstruction.Models
         /// <summary>
         /// 数据表转键值对集合
         /// 把DataTable转成 List集合, 存每一行
-
         /// 集合中放的是键值对字典,存每一列
-
         /// </summary>
         /// <param name="dt">数据表</param>
         /// <returns>哈希表数组</returns>

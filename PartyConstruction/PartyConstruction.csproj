@@ -107,8 +107,8 @@
     <Compile Include="Model\DBScore.cs" />
     <Compile Include="Model\DBUser.cs" />
     <Compile Include="Model\DBUserActionData.cs" />
-    <Compile Include="Model\FileHelper.cs" />
-    <Compile Include="Model\JsonHelper.cs" />
+    <Compile Include="Helper\FileHelper.cs" />
+    <Compile Include="Helper\JsonHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

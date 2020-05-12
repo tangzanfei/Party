@@ -15,7 +15,9 @@ namespace Maticsoft.DBUtility
     public abstract class DbHelperSQL
     {
         //数据库连接字符串(web.config来配置)，多数据库可使用DbHelperSQLP来实现.
-        public static string connectionString = ConfigurationManager.ConnectionStrings["SQLiteDB"].ConnectionString;   		
+        //public static string connectionString = ConfigurationManager.ConnectionStrings["SQLiteDB"].ConnectionString;  
+        public static readonly string connectionString = "Data Source = " + System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["SQLiteString"]);
+
         public DbHelperSQL()
         {            
         }
