@@ -11,7 +11,7 @@ namespace PartyConstruction.Controlers
     /// <summary>
     /// LoginHandler 的摘要说明
     /// </summary>
-    public class LoginHandler : IHttpHandler
+    public class LoginHandler : IHttpHandler, System.Web.SessionState.IRequiresSessionState
     {
 
         public void ProcessRequest(HttpContext context)
@@ -26,9 +26,28 @@ namespace PartyConstruction.Controlers
                 string pwd = request["PWD"];
 
                 string msg;
-                if(CheckLogin(id, pwd, out msg))
+                if(CheckLogin(id, pwd, out msg,out DBUser user))
                 {
-
+                    string sessionID = "";
+                    if (request.Cookies["sessionID"] == null)
+                    {
+                        sessionID = context.Session.SessionID;                        
+                        request.Cookies.Add(new HttpCookie("sessionID", sessionID) { Expires = DateTime.Now.AddMinutes(30) });
+                    }
+                    sessionID = request["sessionID"];
+                    if (ServerHelper.SessionDic.ContainsKey(sessionID))
+                    {
+                        //已经有记录
+                        //跳转主页
+                    }
+                    else
+                    {
+                        //没有记录
+                        //记录再跳转主页
+                        ServerHelper.SessionDic.Add(sessionID, context.Session);
+                    }
+                    ServerHelper.SessionDic[sessionID]["LoginedUser"] = user;
+                    response.Write("ok");
                 }
                 else
                 {
@@ -45,10 +64,10 @@ namespace PartyConstruction.Controlers
 
 
        
-        bool CheckLogin(string id,string pwd,out string msg)
+        bool CheckLogin(string id,string pwd,out string msg,out DBUser user)
         {
             msg = "";
-            var user = DbHelper.UserBLL.GetModelByAccount(id);
+            user = DbHelper.UserBLL.GetModelByAccount(id);
             if (user==null)
             {
                 msg = "用户不存在";

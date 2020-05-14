@@ -19,7 +19,7 @@
                     success: function (data) {
                         switch (data) {
                             case "ok": {
-                                window.location = "VotePage.html";
+                                window.location = "Views/Home.html";
                                 break;
                             }
                             case "admin": {
@@ -31,7 +31,9 @@
                             }
                         }
                     }, error: function (msg) {
-                        alert(msg.responseText);
+                        if (msg != null) {
+                            alert(msg.responseText);
+                        }
                     }
                 })
             })

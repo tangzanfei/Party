@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="Lib\PartyConstruction.db3" />
     <Content Include="Controlers\LoginHandler.ashx" />
+    <Content Include="Controlers\HomeHandler.ashx" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -90,6 +91,9 @@
     <Compile Include="BLL\ScoreBLL.cs" />
     <Compile Include="BLL\UserActionDataBLL.cs" />
     <Compile Include="BLL\UserBLL.cs" />
+    <Compile Include="Controlers\HomeHandler.ashx.cs">
+      <DependentUpon>HomeHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Controlers\LoginHandler.ashx.cs">
       <DependentUpon>LoginHandler.ashx</DependentUpon>
     </Compile>
