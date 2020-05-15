@@ -25,28 +25,33 @@ namespace PartyConstruction.Controlers
                 string id = request["ID"];
                 string pwd = request["PWD"];
 
+                if (string.IsNullOrEmpty(id))
+                {
+                    response.Redirect("..\\Login.html");
+                }
                 string msg;
                 if(CheckLogin(id, pwd, out msg,out DBUser user))
                 {
-                    string sessionID = "";
-                    if (request.Cookies["sessionID"] == null)
-                    {
-                        sessionID = context.Session.SessionID;                        
-                        request.Cookies.Add(new HttpCookie("sessionID", sessionID) { Expires = DateTime.Now.AddMinutes(30) });
-                    }
-                    sessionID = request["sessionID"];
-                    if (ServerHelper.SessionDic.ContainsKey(sessionID))
-                    {
-                        //已经有记录
-                        //跳转主页
-                    }
-                    else
-                    {
-                        //没有记录
-                        //记录再跳转主页
-                        ServerHelper.SessionDic.Add(sessionID, context.Session);
-                    }
-                    ServerHelper.SessionDic[sessionID]["LoginedUser"] = user;
+                    //string sessionID = "";
+                    //if (request.Cookies["sessionID"] == null)
+                    //{
+                    //    sessionID = context.Session.SessionID;                        
+                    //    request.Cookies.Add(new HttpCookie("sessionID", sessionID) { Expires = DateTime.Now.AddMinutes(30) });
+                    //}
+                    //sessionID = request["sessionID"];
+                    //if (ServerHelper.SessionDic.ContainsKey(sessionID))
+                    //{
+                    //    //已经有记录
+                    //    //跳转主页
+                    //}
+                    //else
+                    //{
+                    //    //没有记录
+                    //    //记录再跳转主页
+                    //    ServerHelper.SessionDic.Add(sessionID, context.Session);
+                    //}
+                    //ServerHelper.SessionDic[sessionID]["LoginedUser"] = user;
+                    context.Session["LoginedUser"] = user;
                     response.Write("ok");
                 }
                 else
@@ -58,7 +63,6 @@ namespace PartyConstruction.Controlers
             catch (Exception e)
             {
                 FileHelper.WriteLog(e);
-                response.Write(e);
             }
         }
 

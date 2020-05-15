@@ -2,68 +2,29 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css">
-    <script src="https://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="https://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script><!--这句很重要，且位置必须放在js的引入之后-->
-    <script>
-        $(function () {
-            $("#login").click(function () {
-                var id = $("#ID").val();
-                var pwd = $("#password").val();
-                save()
-                $.ajax({
-                    type: 'POST',
-                    url: 'Controlers/LoginHandler.ashx',
-                    data: { ID: id, PWD: pwd },
-                    success: function (data) {
-                        switch (data) {
-                            case "ok": {
-                                window.location = "Views/Home.html";
-                                break;
-                            }
-                            case "admin": {
-                                window.location = "Admin.html";
-                                break;
-                            }
-                            default: {
-                                alert(data);
-                            }
-                        }
-                    }, error: function (msg) {
-                        if (msg != null) {
-                            alert(msg.responseText);
-                        }
-                    }
-                })
-            })
-        })
-
-        $(document).ready(function () {
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="https://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script><!--这句很重要，且位置必须放在js的引入之后-->
+<script>
+    $(function () {
+        $("#login").click(function () {
+            var id = $("#ID").val();
+            var pwd = $("#password").val();
+            save()
             $.ajax({
                 type: 'POST',
-                url: '../Controlers/HomeHandler.ashx',
-                data: { CMD: "GetUser", param1: "" },
-                success: function (strjson) {
-                    var responsdata= JSON.parse(strjson)
-
-                    switch (responsdata.result) {
+                url: 'Controlers/LoginHandler.ashx',
+                data: { ID: id, PWD: pwd },
+                success: function (data) {
+                    switch (data) {
                         case "ok": {
-                            //window.location = "Views/Home.html";
-                            var user = responsdata.user;
-                            $("#userInfo").append(('<li>姓名：' + user.Name + '</li>'));
-                            $("#userInfo").append(('<li>账户名：' + user.Account + '</li>'));
-                            $("#userInfo").append(('<li>支部：' + user.BranchID + '</li>'));
-                            $("#userInfo").append(('<li>社区支部：' + user.ServicingBranchID + '</li>'));
-                            $("#userInfo").append(('<li>积分：' + 60 + '</li>'));
-                            $("#userInfo").append(('<li>支部书记：' + user.IsBranchMaster + '</li>'));
-                            $("#userInfo").append(('<li>管理员：' + user.IsManager + '</li>'));
-                            $("#userInfo").refresh();
+                            window.location = "Views/Home.html";
                             break;
                         }
                         case "admin": {
-                            //window.location = "Admin.html";
+                            window.location = "Admin.html";
                             break;
                         }
                         default: {
@@ -76,87 +37,174 @@
                     }
                 }
             })
-        });
-    </script>
+        })
+    })
+
+    $(document).ready(function () {
+        $.ajax({
+            type: 'POST',
+            url: '../Controlers/HomeHandler.ashx',
+            data: { CMD: "GetUser", param1: "" },
+            success: function (strjson) {
+                var responsdata = JSON.parse(strjson)
+
+                if (responsdata.result) {                       
+                    var user = responsdata.user;
+
+                    if (user.IsManager) {
+                        $("#masterOptionList").show();
+                    }
+                    else {
+                        $("#masterOptionList").hide();
+
+                    }
+
+                        var master = user.IsBranchMaster ? '是' : '否';
+                        var mng = user.IsManager ? '是' : '否';
+                        $("#userInfo").append(('<li>姓名：' + user.Name + '</li>'));
+                        $("#userInfo").append(('<li>账户名：' + user.Account + '</li>'));
+                        $("#userInfo").append(('<li>支部：' + user.BranchName + '</li>'));
+                        $("#userInfo").append(('<li>社区支部：' + user.ServicingBranchName + '</li>'));
+                        $("#userInfo").append(('<li>积分：' + 60 + '</li>'));
+                        $("#userInfo").append(('<li>支部书记：' + master + '</li>'));
+                        $("#userInfo").append(('<li>管理员：' + mng + '</li>'));
+                        $("#userInfo").listview('refresh');                            
+                }
+                else{
+                        //window.location = "Admin.html";
+                    switch (responsdata.msg) {
+                        case "Unlogin":
+                            window.location = "../Login.html";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }, error: function (msg) {
+                if (msg != null) {
+                    alert(msg.responseText);
+                }
+            }
+        })
+
+        RefreshTopList();
+    });
+
+    function RefreshTopList() {
+        $.ajax({
+            type: 'POST',
+            url: '../Controlers/HomeHandler.ashx',
+            data: { CMD: "GetScoreTop", param1: "" },
+            success: function (strjson) {
+                var responsdata = JSON.parse(strjson)
+
+                if (responsdata.result) {
+                    var userlist = responsdata.userlist;
+                    for (var i = 0; i < userlist.length; i++) {
+                        $("#topList").append(('<li>' + (i+1) + '  ' +  userlist[i].Name + '  ' + userlist[i].Score + '分</li>'));
+                    }
+                    $("#topList").listview('refresh');
+                }
+                else {
+                    switch (responsdata.msg) {
+                        case "Unlogin":
+                            window.location = "../Login.html";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+            },
+            error : function (msg) {
+                if (msg != null) {
+                    alert(msg.responseText);
+                }
+
+            }
+        })
+    }
+</script>
 </head >
 
-            <body>
-                <div data-role="page" id="pageHome">
-                    <div data-role="header">
-                        <h1>党建积分考核系统</h1>
-                    </div>
-                    <div data-role="main" class="ui-content" style="min-width:250px;max-width:400px;margin:auto auto;">
-                        <ul data-role="listview" data-inset="true">
+        <body>
+            <div data-role="page" id="pageHome">
+                <div data-role="header">
+                    <h1>党建积分考核系统</h1>
+                </div>
+                <div data-role="main" class="ui-content" style="min-width:250px;max-width:400px;margin:auto auto;">
+                    <ul data-role="listview" data-inset="true">
 
-                            <li data-role="list-divider">参与支部活动</li>
-                            <li><a href="#">打卡</a></li>
-                            <li><a href="#">社区报到</a></li>
-                            <li><a href="#">社区打卡</a></li>
-                            <li><a href="#">申请加分</a></li>
+                        <li data-role="list-divider">参与支部活动</li>
+                        <li><a href="#">活动打卡</a></li>
+                        <li><a href="#">社区报到</a></li>
+                        <li><a href="#">社区打卡</a></li>
+                        <li><a href="#">申请加分</a></li>
+                    </ul>
+                    <ul data-role="listview" data-inset="true" id="masterOptionList" hidden>
+                        <li data-role="list-divider">支部管理</li>
+                        <li><a href="#">发布活动</a></li>
+                        <li><a href="#">审核打卡</a></li>
+                        <li><a href="#">审核加分</a></li>
+                    </ul>
+                    <ul data-role="listview" data-inset="true">
+                        <li data-role="list-divider">个人</li>
+                        <li><a href="#">修改密码</a></li>
+                        <li><a href="#">注销登录</a></li>
+                    </ul>
+                </div>
+                <div data-role="footer" data-position="fixed">
+                    <div data-role="navbar">
+                        <ul>
+                            <li><a href="#pageHome" class="ui-btn-active ui-state-persist">首页</a></li>
+                            <li><a href="#pageTopList">排行榜</a></li>
+                            <li><a href="#pagePersonal">个人中心</a></li>
                         </ul>
-                        <ul data-role="listview" data-inset="true">
-                            <li data-role="list-divider">支部管理</li>
-                            <li><a href="#">发布活动</a></li>
-                            <li><a href="#">审核打卡</a></li>
-                            <li><a href="#">审核加分</a></li>
-                        </ul>
-                        <ul data-role="listview" data-inset="true">
-                            <li data-role="list-divider">个人</li>
-                            <li><a href="#">修改密码</a></li>
-                        </ul>
-                    </div>
-                    <div data-role="footer" data-position="fixed">
-                        <div data-role="navbar">
-                            <ul>
-                                <li><a href="#pageHome" class="ui-btn-active ui-state-persist">首页</a></li>
-                                <li><a href="#pageTopList">排行榜</a></li>
-                                <li><a href="#pagePersonal">个人中心</a></li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
-                <div data-role="page" id="pageTopList">
-                    <div data-role="header">
-                        <h1>党建积分考核系统</h1>
-                    </div>
-                    <div data-role="main" class="ui-content" style="min-width:250px;max-width:400px;margin:auto auto;">
-                        <ul data-role="listview" data-inset="true">
+            </div>
+            <div data-role="page" id="pageTopList">
+                <div data-role="header">
+                    <h1>党建积分考核系统</h1>
+                </div>
+                <div data-role="main" class="ui-content" style="min-width:250px;max-width:400px;margin:auto auto;">
+                    <ul data-role="listview" data-inset="true" id="topList">
 
+                    </ul>
+                </div>
+                <div data-role="footer" data-position="fixed">
+                    <div data-role="navbar">
+                        <ul>
+                            <li><a href="#pageHome">首页</a></li>
+                            <li><a href="#pageTopList" class="ui-btn-active ui-state-persist">排行榜</a></li>
+                            <li><a href="#pagePersonal">个人中心</a></li>
                         </ul>
                     </div>
-                    <div data-role="footer" data-position="fixed">
-                        <div data-role="navbar">
-                            <ul>
-                                <li><a href="#pageHome">首页</a></li>
-                                <li><a href="#pageTopList" class="ui-btn-active ui-state-persist">排行榜</a></li>
-                                <li><a href="#pagePersonal">个人中心</a></li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
-                <div data-role="page" id="pagePersonal">
-                    <div data-role="header">
-                        <h1>党建积分考核系统</h1>
-                    </div>
-                    <div data-role="main" class="ui-content" style="min-width:250px;max-width:400px;margin:auto auto;">
-                        <ul data-role="listview" data-inset="true" id="userInfo">
-                            <li data-role="list-divider">个人信息</li>
-                            <!--<li>姓名:唐赞飞</li>-->
-                            <!--<li>积分:60</li>
-    <li>支部:第二支部</li>
-    <li>社区支部:龙潭社区支部</li>-->
+            </div>
+            <div data-role="page" id="pagePersonal">
+                <div data-role="header">
+                    <h1>党建积分考核系统</h1>
+                </div>
+                <div data-role="main" class="ui-content" style="min-width:250px;max-width:400px;margin:auto auto;">
+                    <ul data-role="listview" data-inset="true" id="userInfo">
+                        <li data-role="list-divider">个人信息</li>
+                        <!--<li>姓名:唐赞飞</li>-->
+                        <!--<li>积分:60</li>
+<li>支部:第二支部</li>
+<li>社区支部:龙潭社区支部</li>-->
+                    </ul>
+                </div>
+                <div data-role="footer" data-position="fixed">
+                    <div data-role="navbar">
+                        <ul>
+                            <li><a href="#pageHome">首页</a></li>
+                            <li><a href="#pageTopList">排行榜</a></li>
+                            <li><a href="#pagePersonal" class="ui-btn-active ui-state-persist">个人中心</a></li>
                         </ul>
                     </div>
-                    <div data-role="footer" data-position="fixed">
-                        <div data-role="navbar">
-                            <ul>
-                                <li><a href="#pageHome">首页</a></li>
-                                <li><a href="#pageTopList">排行榜</a></li>
-                                <li><a href="#pagePersonal" class="ui-btn-active ui-state-persist">个人中心</a></li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
+            </div>
 
-            </body>
+        </body>
 </html >

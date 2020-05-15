@@ -86,6 +86,7 @@ namespace PartyConstruction.Helper
                 {
                     sw.WriteLine(e.Message);
                 }
+                sw.WriteLine(e.StackTrace);
             }
         }
     }

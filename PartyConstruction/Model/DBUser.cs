@@ -6,7 +6,7 @@
 *
 * Ver    变更日期             负责人  变更内容
 * ───────────────────────────────────
-* V0.01  2020/5/8 星期五 下午 5:08:35   N/A    初版
+* V0.01  2020/5/15 星期五 上午 10:32:38   N/A    初版
 *
 * Copyright (c) 2012 Maticsoft Corporation. All rights reserved.
 *┌──────────────────────────────────┐
@@ -34,6 +34,7 @@ namespace PartyConstruction.Model
 		private string _account;
 		private string _password;
 		private string _servicingbranchid;
+		private int _score=60;
 		/// <summary>
 		/// 
 		/// </summary>
@@ -97,6 +98,14 @@ namespace PartyConstruction.Model
 		{
 			set{ _servicingbranchid=value;}
 			get{return _servicingbranchid;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public int Score
+		{
+			set{ _score=value;}
+			get{return _score;}
 		}
 		#endregion Model
 

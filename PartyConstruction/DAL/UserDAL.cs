@@ -6,7 +6,7 @@
 *
 * Ver    变更日期             负责人  变更内容
 * ───────────────────────────────────
-* V0.01  2020/5/8 星期五 下午 5:08:35   N/A    初版
+* V0.01  2020/5/15 星期五 上午 10:32:38   N/A    初版
 *
 * Copyright (c) 2012 Maticsoft Corporation. All rights reserved.
 *┌──────────────────────────────────┐
@@ -64,9 +64,9 @@ namespace PartyConstruction.DAL
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("insert into UserInfo(");
-			strSql.Append("ID,Name,IsBranchMaster,IsManager,BranchID,Account,Password,ServicingBranchID)");
+			strSql.Append("ID,Name,IsBranchMaster,IsManager,BranchID,Account,Password,ServicingBranchID,Score)");
 			strSql.Append(" values (");
-			strSql.Append("@ID,@Name,@IsBranchMaster,@IsManager,@BranchID,@Account,@Password,@ServicingBranchID)");
+			strSql.Append("@ID,@Name,@IsBranchMaster,@IsManager,@BranchID,@Account,@Password,@ServicingBranchID,@Score)");
 			SQLiteParameter[] parameters = {
 					new SQLiteParameter("@ID", DbType.String,2147483647),
 					new SQLiteParameter("@Name", DbType.String,2147483647),
@@ -75,7 +75,8 @@ namespace PartyConstruction.DAL
 					new SQLiteParameter("@BranchID", DbType.String,2147483647),
 					new SQLiteParameter("@Account", DbType.String,2147483647),
 					new SQLiteParameter("@Password", DbType.String,2147483647),
-					new SQLiteParameter("@ServicingBranchID", DbType.String,2147483647)};
+					new SQLiteParameter("@ServicingBranchID", DbType.String,2147483647),
+					new SQLiteParameter("@Score", DbType.Int32,4)};
 			parameters[0].Value = model.ID;
 			parameters[1].Value = model.Name;
 			parameters[2].Value = model.IsBranchMaster;
@@ -84,6 +85,7 @@ namespace PartyConstruction.DAL
 			parameters[5].Value = model.Account;
 			parameters[6].Value = model.Password;
 			parameters[7].Value = model.ServicingBranchID;
+			parameters[8].Value = model.Score;
 
 			int rows=DbHelperSQLite.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -108,7 +110,8 @@ namespace PartyConstruction.DAL
 			strSql.Append("BranchID=@BranchID,");
 			strSql.Append("Account=@Account,");
 			strSql.Append("Password=@Password,");
-			strSql.Append("ServicingBranchID=@ServicingBranchID");
+			strSql.Append("ServicingBranchID=@ServicingBranchID,");
+			strSql.Append("Score=@Score");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
 					new SQLiteParameter("@Name", DbType.String,2147483647),
@@ -118,6 +121,7 @@ namespace PartyConstruction.DAL
 					new SQLiteParameter("@Account", DbType.String,2147483647),
 					new SQLiteParameter("@Password", DbType.String,2147483647),
 					new SQLiteParameter("@ServicingBranchID", DbType.String,2147483647),
+					new SQLiteParameter("@Score", DbType.Int32,4),
 					new SQLiteParameter("@ID", DbType.String,2147483647)};
 			parameters[0].Value = model.Name;
 			parameters[1].Value = model.IsBranchMaster;
@@ -126,7 +130,8 @@ namespace PartyConstruction.DAL
 			parameters[4].Value = model.Account;
 			parameters[5].Value = model.Password;
 			parameters[6].Value = model.ServicingBranchID;
-			parameters[7].Value = model.ID;
+			parameters[7].Value = model.Score;
+			parameters[8].Value = model.ID;
 
 			int rows=DbHelperSQLite.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -189,7 +194,7 @@ namespace PartyConstruction.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select ID,Name,IsBranchMaster,IsManager,BranchID,Account,Password,ServicingBranchID from UserInfo ");
+			strSql.Append("select ID,Name,IsBranchMaster,IsManager,BranchID,Account,Password,ServicingBranchID,Score from UserInfo ");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
 					new SQLiteParameter("@ID", DbType.String,2147483647)			};
@@ -211,7 +216,7 @@ namespace PartyConstruction.DAL
 		{
 
 			StringBuilder strSql = new StringBuilder();
-			strSql.Append("select ID,Name,IsBranchMaster,IsManager,BranchID,Account,Password,ServicingBranchID from UserInfo ");
+			strSql.Append("select ID,Name,IsBranchMaster,IsManager,BranchID,Account,Password,ServicingBranchID,Score from UserInfo ");
 			strSql.Append(" where Account=@ID ");
 			SQLiteParameter[] parameters = {
 					new SQLiteParameter("@ID", DbType.String,2147483647)            };
@@ -228,6 +233,7 @@ namespace PartyConstruction.DAL
 				return null;
 			}
 		}
+
 
 		/// <summary>
 		/// 得到一个对象实体
@@ -283,6 +289,10 @@ namespace PartyConstruction.DAL
 				{
 					model.ServicingBranchID=row["ServicingBranchID"].ToString();
 				}
+				if(row["Score"]!=null && row["Score"].ToString()!="")
+				{
+					model.Score=int.Parse(row["Score"].ToString());
+				}
 			}
 			return model;
 		}
@@ -293,7 +303,7 @@ namespace PartyConstruction.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select ID,Name,IsBranchMaster,IsManager,BranchID,Account,Password,ServicingBranchID ");
+			strSql.Append("select ID,Name,IsBranchMaster,IsManager,BranchID,Account,Password,ServicingBranchID,Score ");
 			strSql.Append(" FROM UserInfo ");
 			if(strWhere.Trim()!="")
 			{
