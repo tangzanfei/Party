@@ -65,7 +65,7 @@
                         $("#userInfo").append(('<li>账户名：' + user.Account + '</li>'));
                         $("#userInfo").append(('<li>支部：' + user.BranchName + '</li>'));
                         $("#userInfo").append(('<li>社区支部：' + user.ServicingBranchName + '</li>'));
-                        $("#userInfo").append(('<li>积分：' + 60 + '</li>'));
+                    $("#userInfo").append(('<li>积分：' + user.Score + '</li>'));
                         $("#userInfo").append(('<li>支部书记：' + master + '</li>'));
                         $("#userInfo").append(('<li>管理员：' + mng + '</li>'));
                         $("#userInfo").listview('refresh');                            
@@ -124,6 +124,35 @@
             }
         })
     }
+
+
+    function summitImg() {
+        var img = $("#img").val();
+        $.ajax({
+            type: 'POST',
+            url: "../Controlers/HomeHandler.ashx",
+            data: { CMD: "summitImg", param1: img },
+            success: function (strjson) {
+                var responsdata = JSON.parse(strjson)
+
+                if (responsdata.result) {
+                    var user = responsdata.user;
+
+                }
+                else {
+                    //window.location = "Admin.html";
+                    //switch (responsdata.msg) {
+                    //    case "Unlogin":
+                    //        window.location = "../Login.html";
+                    //        break;
+                    //    default:
+                    //        break;
+                    //}
+                }
+
+            }
+        })
+    }
 </script>
 </head >
 
@@ -135,17 +164,26 @@
                 <div data-role="main" class="ui-content" style="min-width:250px;max-width:400px;margin:auto auto;">
                     <ul data-role="listview" data-inset="true">
 
-                        <li data-role="list-divider">参与支部活动</li>
-                        <li><a href="#">活动打卡</a></li>
-                        <li><a href="#">社区报到</a></li>
-                        <li><a href="#">社区打卡</a></li>
-                        <li><a href="#">申请加分</a></li>
+                        <li data-role="list-divider">履行义务积分（每月20分）</li>
+                        <li><a href="#">三会一课打卡</a></li>
+                        <li><a href="#">主题党日打卡</a></li>
+                    </ul>
+                    <ul data-role="listview" data-inset="true">
+
+                        <li data-role="list-divider">志愿服务积分（每月不超过10分）</li>
+                        <li><a href="#">支部活动</a></li>
+                        <li><a href="#">社区活动</a></li>
+                    </ul>
+                    <ul data-role="listview" data-inset="true">
+
+                        <li data-role="list-divider">任务奖励积分（每月不超过10）</li>
+                        <li><a href="#">投稿加分申请</a></li>
+                        <li><a href="#">其他奖励分申请</a></li>
                     </ul>
                     <ul data-role="listview" data-inset="true" id="masterOptionList" hidden>
                         <li data-role="list-divider">支部管理</li>
-                        <li><a href="#">发布活动</a></li>
-                        <li><a href="#">审核打卡</a></li>
-                        <li><a href="#">审核加分</a></li>
+                        <li><a href="#">审核志愿活动积分</a></li>
+                        <li><a href="#">审核任务奖励积分</a></li>
                     </ul>
                     <ul data-role="listview" data-inset="true">
                         <li data-role="list-divider">个人</li>
@@ -168,8 +206,9 @@
                     <h1>党建积分考核系统</h1>
                 </div>
                 <div data-role="main" class="ui-content" style="min-width:250px;max-width:400px;margin:auto auto;">
+                    <input id="upload" type="file" accept="image/*" class="abc">
+                    <input type="button" onclick="summitImg()" value="ss"/>
                     <ul data-role="listview" data-inset="true" id="topList">
-
                     </ul>
                 </div>
                 <div data-role="footer" data-position="fixed">

@@ -63,6 +63,7 @@ namespace PartyConstruction.Controlers
             catch (Exception e)
             {
                 FileHelper.WriteLog(e);
+                response.Write(e.Message);
             }
         }
 
