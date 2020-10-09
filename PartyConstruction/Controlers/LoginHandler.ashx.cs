@@ -20,6 +20,24 @@ namespace PartyConstruction.Controlers
 
             var request = context.Request;
             var response = context.Response;
+            int i = 0;
+
+            //String ip = request.getHeader("X-Forwarded-For");
+            //if (StringUtils.isNotEmpty(ip) && !"unKnow".equalsIgnoreCase(ip))
+            //{
+            //    //多次反向代理后会有多个ip值，第一个ip才是真实ip
+            //    String[] ipList = ip.split(",");
+            //    ip = ipList[0];
+            //}
+            //else
+            //{
+            //    ip = request.getHeader("X-Real-IP");
+            //    if (StringUtils.isEmpty(ip) || "unKnown".equalsIgnoreCase(ip))
+            //    {
+            //        ip = request.getRemoteAddr();
+            //    }
+            //}
+
             try
             {
                 string id = request["ID"];
