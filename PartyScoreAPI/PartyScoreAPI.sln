@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartyScoreAPI", "PartyScoreAPI.csproj", "{D7DE9569-FDC1-4280-B8D3-233D570EE124}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBCommon", "..\DBCommon\DBCommon.csproj", "{01E5E5D9-D905-4FF7-B01C-FE65AF49725A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7DE9569-FDC1-4280-B8D3-233D570EE124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7DE9569-FDC1-4280-B8D3-233D570EE124}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7DE9569-FDC1-4280-B8D3-233D570EE124}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7DE9569-FDC1-4280-B8D3-233D570EE124}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01E5E5D9-D905-4FF7-B01C-FE65AF49725A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01E5E5D9-D905-4FF7-B01C-FE65AF49725A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01E5E5D9-D905-4FF7-B01C-FE65AF49725A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01E5E5D9-D905-4FF7-B01C-FE65AF49725A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B1BDC28A-E4E7-477A-A000-1525133465C1}
+	EndGlobalSection
+EndGlobal
