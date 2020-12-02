@@ -3,6 +3,10 @@ PartyConstruction/bin/*
 PartyConstruction/.vs/*
 PartyConstruction/Log.txt
 PartyConstruction/PartyConstruction.db3
+DBCommon/obj/*
+DBCommon/bin/*
+PartyScoreAPI/obj/*
+PartyScoreAPI/bin/*
 *.pdb
 *.vs
 *.suo
