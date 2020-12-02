@@ -36,6 +36,7 @@
       <HintPath>Lib\Maticsoft.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.62.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -83,6 +84,7 @@
     <Content Include="Lib\System.Data.SQLite.DLL" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="Lib\PartyConstruction.db3" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

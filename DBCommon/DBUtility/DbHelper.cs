@@ -12,34 +12,47 @@ namespace DBCommon.DBUtility
 	/// </summary>
     public static class DbHelper
     {
-		//private static ActionBLL mActionBLL = new ActionBLL();
+        //private static BonusBLL mActionBLL = new ActionBLL();
 
-		//public static ActionBLL ActionBLL
-		//{
-		//	get { return mActionBLL; }
-		//}
+        //public static ActionBLL ActionBLL
+        //{
+        //    get { return mActionBLL; }
+        //}
+        private static BonusBLL mBonusBLL = new BonusBLL();
 
-		//private static BranchBLL mBranchBLL = new BranchBLL();
+        public static BonusBLL BonusBLL
+        {
+            get { return mBonusBLL; }
+        }
 
-		//public static BranchBLL BranchBLL
-		//{
-		//	get { return mBranchBLL; }
-		//}
+        private static PointBLL mPointBLL = new PointBLL();
 
-		//private static ScoreBLL mScoreBLL = new ScoreBLL();
+        public static PointBLL PointBLL
+        {
+            get { return mPointBLL; }
+        }
 
-		//public static ScoreBLL ScoreBLL
-		//{
-		//	get { return mScoreBLL;; }
-		//}
+        //private static BranchBLL mBranchBLL = new BranchBLL();
+
+        //public static BranchBLL BranchBLL
+        //{
+        //	get { return mBranchBLL; }
+        //}
+
+        //private static ScoreBLL mScoreBLL = new ScoreBLL();
+
+        //public static ScoreBLL ScoreBLL
+        //{
+        //	get { return mScoreBLL;; }
+        //}
 
 
-		//private static UserActionDataBLL mUserActionDataBLL = new UserActionDataBLL();
+        //private static UserActionDataBLL mUserActionDataBLL = new UserActionDataBLL();
 
-		//private static UserBLL mUserBLL = new UserBLL();
-		//public static UserActionDataBLL UserActionDataBLL { get => mUserActionDataBLL;  }
-		//public static UserBLL UserBLL { get => mUserBLL;  }
+        //private static UserBLL mUserBLL = new UserBLL();
+        //public static UserActionDataBLL UserActionDataBLL { get => mUserActionDataBLL;  }
+        //public static UserBLL UserBLL { get => mUserBLL;  }
 
 
-	}
+    }
 }

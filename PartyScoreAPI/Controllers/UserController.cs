@@ -22,7 +22,16 @@ namespace PartyScoreAPI.Controllers
 
         // GET: api/User
         public IEnumerable<User> GetAllUsers()
+        
         {
+            var result = DBCommon.DBUtility.DbHelper.PointBLL.Add(new DBCommon.Model.DBPoint() 
+            { 
+                ID = "00001", 
+                Name = "组织部支部会议室打卡点",
+                QrCode = "ZBHYSDKD",
+                WifiName = "0556",
+                WifiMac = "F9-E1-98-00-FA" 
+            });
             return Users;
         }
 
