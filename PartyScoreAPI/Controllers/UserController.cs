@@ -16,23 +16,17 @@ namespace PartyScoreAPI.Controllers
 
         List<User> Users = new List<User>()
         {
-            new User() { Name = "张飞", Age = 39 } ,
-            new User(){Name="吕布",Age=29}
+            new User() { Name = "张飞" } ,
+            new User(){Name="吕布"}
         };
 
         // GET: api/User
-        public IEnumerable<User> GetAllUsers()
+        public BaseGetResponse<List<DBCommon.Model.DBUser>> GetAllUsers()
         
         {
-            var result = DBCommon.DBUtility.DbHelper.PointBLL.Add(new DBCommon.Model.DBPoint() 
-            { 
-                ID = "00001", 
-                Name = "组织部支部会议室打卡点",
-                QrCode = "ZBHYSDKD",
-                WifiName = "0556",
-                WifiMac = "F9-E1-98-00-FA" 
-            });
-            return Users;
+            //DBCommon.DBUtility.DbHelper.InitDB();
+            var userList = DBCommon.DBUtility.DbHelper.UserBLL.GetModelList("");
+            return new BaseGetResponse<List<DBCommon.Model.DBUser>>() { Code = 0, Msg = "成功", Data = userList };
         }
 
         // GET: api/User/5
