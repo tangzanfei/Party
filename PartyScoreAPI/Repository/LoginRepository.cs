@@ -6,15 +6,18 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using PartyScoreAPI.Models;
+using DBCommon.Model;
+using DBCommon.DBUtility;
 
 namespace PartyScoreAPI.Repository
 {
-    public class LoginRepository
+    public static class LoginRepository
     {
-        Dictionary<string, string> DicOpenid = new Dictionary<string, string>();
-        Dictionary<string, string> DicSessionKey = new Dictionary<string, string>();
+        static Dictionary<string, string> DicOpenid = new Dictionary<string, string>();
+        static Dictionary<string, string> DicSessionKey = new Dictionary<string, string>();
+        static Dictionary<string, DBUser> DicUser = new Dictionary<string, DBUser>();
 
-        public WeXinLoginResultModel PostCode(string code)
+        public static WeXinLoginResultModel PostCode(string code)
         {
             WeXinLoginInModel weixin = new WeXinLoginInModel();
             weixin.AppId = "wxb75da29c7a0ab9bb";    //固定值，请参照小程序参数说明
@@ -44,13 +47,37 @@ namespace PartyScoreAPI.Repository
                     string sessionKey = "sessionKey_" + Guid.NewGuid().ToString();
                     //_redisCacheManager.Set(openIdKey, resultModel.OpenId, TimeSpan.FromDays(1));
                     //_redisCacheManager.Set(sessionKey, resultModel.Session_Key, TimeSpan.FromDays(1));
+
+                    //如果数据库中有OPENID,则更新缓存，否则新增到数据库并添加到缓存。
+                    if (DbHelper.UserBLL.Exists(resultModel.OpenId))
+                    {
+                        var dbuser = DbHelper.UserBLL.GetModel(resultModel.OpenId);
+                        dbuser.LastLoginTime = DateTime.Now;
+                        DicUser.Add(sessionKey, dbuser);
+                    }
+                    else
+                    {
+                        DBUser user = new DBUser();
+                        user.OpenID = resultModel.OpenId;
+                        user.BranchID = "001";
+                        user.Session = resultModel.Session_Key;
+                        user.LastLoginTime = DateTime.Now;
+                        DbHelper.UserBLL.Add(user);
+                        DicUser.Add(sessionKey, user);
+                    }
+
                     DicOpenid.Add(openIdKey, resultModel.OpenId);
                     DicSessionKey.Add(sessionKey, resultModel.SessionKey);
                     resultModel.OpenIdKey = openIdKey;
                     resultModel.SessionKey = sessionKey;
+                    return resultModel;
+
+                }
+                else
+                {
+                    return resultModel;
                 }
 
-                return resultModel;
                 //返回结果
                 //return Ok(resultModel);
             }

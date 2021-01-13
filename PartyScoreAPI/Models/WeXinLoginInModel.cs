@@ -6,7 +6,7 @@ using System.Web;
 namespace PartyScoreAPI.Models
 {
     /// <summary>
-    /// 微信小程序传入参数Model
+    /// API后台向微信后台服务器传入参数
     /// </summary>
     public class WeXinLoginInModel
     {
@@ -25,7 +25,7 @@ namespace PartyScoreAPI.Models
     }
 
     /// <summary>
-    /// 小程序所需返回参数Model
+    /// 微信后台服务器需返回给API后台的参数
     /// </summary>
     public class WeXinLoginResultModel
     {
@@ -56,6 +56,14 @@ namespace PartyScoreAPI.Models
         /// <summary>
         /// Redis里面Session_Key值所对应的键SessionKey
         /// </summary>
+        public string SessionKey { get; set; }
+    }
+
+
+    public class LoginResult
+    {
+        public string OpenIdKey { get; set; }
+
         public string SessionKey { get; set; }
     }
 }

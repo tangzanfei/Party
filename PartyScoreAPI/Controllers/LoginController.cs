@@ -12,7 +12,6 @@ namespace PartyScoreAPI.Controllers
 {
     public class LoginController : ApiController
     {
-        static LoginRepository repository = new LoginRepository();
 
         /// <summary>
         /// 前段login后，发送获得的code给后台，后台向微信服务器申请openid和sessionkey
@@ -20,9 +19,9 @@ namespace PartyScoreAPI.Controllers
         /// <param name="code"></param>
         //[Route("login/FFF")]
         [HttpPost]
-        public BaseGetResponse<WeXinLoginResultModel> PostCode([FromUri] string code)
+        public BaseGetResponse<LoginResult> PostCode([FromUri] string code)
         {
-            var resultModel = repository.PostCode(code);
+            var resultModel = LoginRepository.PostCode(code);
             switch (resultModel.ErrCode)
             {
                 case -1:
@@ -30,10 +29,14 @@ namespace PartyScoreAPI.Controllers
                     break;
                 case 0:
                     //成功
-                    return new BaseGetResponse<WeXinLoginResultModel>() { Code=0,Msg="成功",Data=resultModel};
+                    LoginResult data = new LoginResult();
+
+                    data.OpenIdKey = "";
+
+                    return new BaseGetResponse<LoginResult>() { Code=0,Msg="成功",Data= data };
                 case 40029:
                     //code无效
-                    return new BaseGetResponse<WeXinLoginResultModel>() { Code = 40029, Msg = "code无效", Data = null };
+                    return new BaseGetResponse<LoginResult>() { Code = 40029, Msg = "code无效", Data = null };
                 case 45011:
                     //频率限制，每个用户每分钟100次
                     break;
@@ -42,7 +45,7 @@ namespace PartyScoreAPI.Controllers
                     break;
             }
 
-            return new BaseGetResponse<WeXinLoginResultModel>() { Code = -1, Msg = "失败", Data = null };
+            return new BaseGetResponse<LoginResult>() { Code = -1, Msg = "失败", Data = null };
 
         }
     }
