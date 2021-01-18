@@ -40,6 +40,9 @@ namespace PartyScoreAPI.Repository
                 //await异步读取最后的JSON（注意此时gzip已经被自动解压缩了，因为上面的AutomaticDecompression = DecompressionMethods.GZip）
                 string responseContent = response.Content.ReadAsStringAsync().Result;
                 var resultModel = JsonConvert.DeserializeObject<WeXinLoginResultModel>(responseContent);
+                //resultModel.OpenId = "0001";
+                //resultModel.Session_Key = "admin";
+                //resultModel.ErrCode = 0;
                 if (!string.IsNullOrEmpty(resultModel.OpenId) && !string.IsNullOrEmpty(resultModel.Session_Key))
                 {
                     //将openid，session_key存入到Redis缓存中；              
@@ -82,6 +85,36 @@ namespace PartyScoreAPI.Repository
                 //return Ok(resultModel);
             }
 
+        }
+
+
+        public static BaseGetResponse<CheckResult> CheckByScanQrcode(string qrcode,string sessionkey)
+        {
+            var res = new BaseGetResponse<CheckResult>() { Code = -1, Msg = "没有这个打卡点", Data = null };
+            if (DicUser.ContainsKey(sessionkey))
+            {
+                DBUser user = DicUser[sessionkey];
+                var pointlist = DbHelper.PointBLL.GetModelList("QrCode='" + qrcode + "'");
+                if (pointlist!=null && pointlist.Count>0)
+                {
+                    res.Code = 0;
+                    res.Msg = "打卡成功";
+                    res.Data = new CheckResult() { CheckTime = DateTime.Now, CheckPoint = pointlist[0].Name };
+#warning 需要补充写入志愿打卡表数据。
+                    return res;
+                }
+                else
+                {
+                    return res;
+                }
+            }
+            else
+            {
+                res.Msg = "会话已过期，需要重新登录";
+                res.Code = 1;
+                return res;
+            }
+            return res;
         }
     }
 }

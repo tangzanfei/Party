@@ -31,7 +31,8 @@ namespace PartyScoreAPI.Controllers
                     //成功
                     LoginResult data = new LoginResult();
 
-                    data.OpenIdKey = "";
+                    data.OpenIdKey = resultModel.OpenIdKey;
+                    data.SessionKey = resultModel.SessionKey;
 
                     return new BaseGetResponse<LoginResult>() { Code=0,Msg="成功",Data= data };
                 case 40029:
