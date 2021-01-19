@@ -138,6 +138,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\WeXinLoginInModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ScoreRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Repository\PointRepository.cs" />
     <Compile Include="Repository\ProductsRepository.cs" />

@@ -104,33 +104,5 @@ namespace PartyScoreAPI.Repository
 
         }
 
-        public static BaseGetResponse<CheckResult> CheckByScanQrcode(string qrcode,string sessionkey)
-        {
-            var res = new BaseGetResponse<CheckResult>() { Code = -1, Msg = "没有这个打卡点", Data = null };
-            if (DicUser.ContainsKey(sessionkey))
-            {
-                DBUser user = DicUser[sessionkey];
-                var pointlist = DbHelper.PointBLL.GetModelList("QrCode='" + qrcode + "'");
-                if (pointlist!=null && pointlist.Count>0)
-                {
-                    res.Code = 0;
-                    res.Msg = "打卡成功";
-                    res.Data = new CheckResult() { CheckTime = DateTime.Now, CheckPoint = pointlist[0].Name };
-#warning 需要补充写入志愿打卡表数据。
-                    return res;
-                }
-                else
-                {
-                    return res;
-                }
-            }
-            else
-            {
-                res.Msg = "会话已过期，需要重新登录";
-                res.Code = 1;
-                return res;
-            }
-            return res;
-        }
     }
 }

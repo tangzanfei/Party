@@ -31,12 +31,30 @@ namespace PartyScoreAPI.Controllers
                 return res;
             }
             //2.检查是否有这个二维码对应的打卡点
-            //3.打卡是否重复
+            //二维码以"BA_"开头的为支部活动
+            if (code.StartsWith("BA_"))
+            {
+                var id = PointRepository.FindBranchActionID(code);
+                if (id == null)
+                {
+                    return res;
+                }
+            }
+            else
+            {
+                var point = PointRepository.FindPoint(code);
+                if (point == null)
+                {
+                    return res;
+                }
+            }
+
+            //3.打卡是否重复,不重复则写入数据库，重复则返回打卡失败
 #warning 需要完善步骤
 
-            var resultModel = UserRepository.CheckByScanQrcode(code, sessionkey);
+            //var resultModel = PointRepository.CheckByScanQrcode(code, sessionkey);
 
-            return resultModel;
+            return res;
 
         }
 
