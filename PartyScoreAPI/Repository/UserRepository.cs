@@ -11,7 +11,10 @@ using DBCommon.DBUtility;
 
 namespace PartyScoreAPI.Repository
 {
-    public static class LoginRepository
+    /// <summary>
+    /// 用户仓库
+    /// </summary>
+    public static class UserRepository
     {
         static Dictionary<string, string> DicOpenid = new Dictionary<string, string>();
         static Dictionary<string, string> DicSessionKey = new Dictionary<string, string>();
@@ -87,6 +90,19 @@ namespace PartyScoreAPI.Repository
 
         }
 
+
+        public static DBUser FindUser(string sessionkey)
+        {
+            if (DicUser.ContainsKey(sessionkey))
+            {
+                return DicUser[sessionkey];
+            }
+            else
+            {
+                return null;
+            }
+
+        }
 
         public static BaseGetResponse<CheckResult> CheckByScanQrcode(string qrcode,string sessionkey)
         {

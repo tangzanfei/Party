@@ -19,13 +19,22 @@ namespace PartyScoreAPI.Controllers
         [HttpPost]
         public BaseGetResponse<CheckResult> CheckByScanQrcode([FromUri] string code, [FromUri] string sessionkey)
         {
+            var res = new BaseGetResponse<CheckResult>() { Code = -1, Msg = "没有这个打卡点", Data = null };
 
             //TODO:
             //1.检查是否有这个用户
+            var user = UserRepository.FindUser(sessionkey);
+            if (user==null)
+            {
+                res.Msg = "会话已过期，需要重新登录";
+                res.Code = 1;
+                return res;
+            }
             //2.检查是否有这个二维码对应的打卡点
             //3.打卡是否重复
 #warning 需要完善步骤
-            var resultModel = LoginRepository.CheckByScanQrcode(code, sessionkey);
+
+            var resultModel = UserRepository.CheckByScanQrcode(code, sessionkey);
 
             return resultModel;
 

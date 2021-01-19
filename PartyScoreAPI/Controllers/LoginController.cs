@@ -21,7 +21,7 @@ namespace PartyScoreAPI.Controllers
         [HttpPost]
         public BaseGetResponse<LoginResult> PostCode([FromUri] string code)
         {
-            var resultModel = LoginRepository.PostCode(code);
+            var resultModel = UserRepository.PostCode(code);
             switch (resultModel.ErrCode)
             {
                 case -1:
