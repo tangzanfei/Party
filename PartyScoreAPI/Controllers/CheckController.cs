@@ -32,9 +32,12 @@ namespace PartyScoreAPI.Controllers
             }
             //2.检查是否有这个二维码对应的打卡点
             //二维码以"BA_"开头的为支部活动
-            if (code.StartsWith("BA_"))
+            string id="";
+            DBCommon.Model.DBPoint point=null;
+            bool isBranchAction = code.StartsWith("BA_");
+            if (isBranchAction)
             {
-                var id = PointRepository.FindBranchActionID(code);
+                id = PointRepository.FindBranchActionID(code);
                 if (id == null)
                 {
                     return res;
@@ -42,7 +45,7 @@ namespace PartyScoreAPI.Controllers
             }
             else
             {
-                var point = PointRepository.FindPoint(code);
+                point = PointRepository.FindPoint(code);
                 if (point == null)
                 {
                     return res;
@@ -51,7 +54,33 @@ namespace PartyScoreAPI.Controllers
 
             //3.打卡是否重复,不重复则写入数据库，重复则返回打卡失败
 #warning 需要完善步骤
+            if (isBranchAction)
+            {
 
+            }
+            else
+            {
+                string dataid = ScoreRepository.IsSignined(point.ID, user.OpenID);
+                if (dataid != null)
+                {
+                    res.Msg = "今天已打卡，请勿重复打卡";
+                    res.Code = 2;
+                    return res;
+                }
+                var dataresult = ScoreRepository.Signin(point.ID, user.OpenID);
+                if (dataresult!=null)
+                {
+                    res.Msg = "打卡成功";
+                    res.Code = 0;
+                    res.Data = dataresult;
+                }
+                else
+                {
+                    res.Msg = "打卡失败,未知错误";
+                    res.Code = 3;
+                }
+
+            }
             //var resultModel = PointRepository.CheckByScanQrcode(code, sessionkey);
 
             return res;

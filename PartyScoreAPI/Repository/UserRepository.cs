@@ -20,6 +20,12 @@ namespace PartyScoreAPI.Repository
         static Dictionary<string, string> DicSessionKey = new Dictionary<string, string>();
         static Dictionary<string, DBUser> DicUser = new Dictionary<string, DBUser>();
 
+
+        public static void Init()
+        {
+
+        }
+
         public static WeXinLoginResultModel PostCode(string code)
         {
             WeXinLoginInModel weixin = new WeXinLoginInModel();
@@ -43,9 +49,9 @@ namespace PartyScoreAPI.Repository
                 //await异步读取最后的JSON（注意此时gzip已经被自动解压缩了，因为上面的AutomaticDecompression = DecompressionMethods.GZip）
                 string responseContent = response.Content.ReadAsStringAsync().Result;
                 var resultModel = JsonConvert.DeserializeObject<WeXinLoginResultModel>(responseContent);
-                //resultModel.OpenId = "0001";
-                //resultModel.Session_Key = "admin";
-                //resultModel.ErrCode = 0;
+                resultModel.OpenId = "0001";
+                resultModel.Session_Key = "admin";
+                resultModel.ErrCode = 0;
                 if (!string.IsNullOrEmpty(resultModel.OpenId) && !string.IsNullOrEmpty(resultModel.Session_Key))
                 {
                     //将openid，session_key存入到Redis缓存中；              
