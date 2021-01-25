@@ -89,5 +89,16 @@ namespace PartyScoreAPI.Repository
             }
             return result;
         }
+
+        public static void GetThisMounthSignData(string userid)
+        {
+            if (!isInited)
+            {
+                Init();
+            }
+
+        }
+
+        public static void GetThismounthBA_SignData(string userid) { }
     }
 }
