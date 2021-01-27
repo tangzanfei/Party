@@ -31,6 +31,10 @@ namespace PartyScoreAPI.Repository
 
         public static DBPoint FindPointById(string id)
         {
+            if (!IsInited)
+            {
+                Init();
+            }
             return ListPoint.Find(x => x.ID.Equals(id));
         }
 

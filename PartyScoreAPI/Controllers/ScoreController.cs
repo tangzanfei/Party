@@ -15,6 +15,13 @@ namespace PartyScoreAPI.Controllers
         {
             var res = new BaseGetResponse<List<CheckResult>>() { Code = -1, Msg = "未知错误", Data = null };
 
+            if (string.IsNullOrEmpty(sessionkey))
+            {
+                res.Msg = "会话已过期，需要重新登录";
+                res.Code = 1;
+                return res;
+
+            }
             //TODO:
             //1.检查是否有这个用户
             var user = UserRepository.FindUser(sessionkey);
@@ -32,7 +39,8 @@ namespace PartyScoreAPI.Controllers
                 res.Code = 2;
                 return res;
             }
-
+            res.Msg = "OK";
+            res.Code = 0;
             res.Data = datalist;
             return res;
         }
