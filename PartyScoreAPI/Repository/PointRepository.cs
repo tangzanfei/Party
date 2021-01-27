@@ -13,10 +13,27 @@ namespace PartyScoreAPI.Repository
     /// </summary>
     public static class PointRepository
     {
+        static bool IsInited = false;
+        static List<DBPoint> ListPoint = new List<DBPoint>();
+
         //打卡点二维码字典
         static Dictionary<string, DBPoint> DicCodePoint = new Dictionary<string, DBPoint>();
         //支部活动二维码字典
         static Dictionary<string, DBBranchAction> DicCodeBranchAction = new Dictionary<string, DBBranchAction>();
+
+        public static void Init()
+        {
+            ListPoint.Clear();
+            ListPoint = DbHelper.PointBLL.GetModelList("");
+            IsInited = true;
+        }
+
+
+        public static DBPoint FindPointById(string id)
+        {
+            return ListPoint.Find(x => x.ID.Equals(id));
+        }
+
 
         public static DBPoint FindPoint(string qrcode)
         {

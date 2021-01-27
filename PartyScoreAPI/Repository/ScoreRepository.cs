@@ -90,13 +90,19 @@ namespace PartyScoreAPI.Repository
             return result;
         }
 
-        public static void GetThisMounthSignData(string userid)
+        public static List<CheckResult> GetThisMounthSignData(string userid)
         {
             if (!isInited)
             {
                 Init();
             }
-
+            var list = signinList.Where(x => x.UserID.Equals(userid));
+            List<CheckResult> crlist = new List<CheckResult>();
+            foreach (var item in list)
+            {
+                crlist.Add(new CheckResult() { CheckTime = item.CheckTime, CheckPoint = PointRepository.FindPointById(item.PointID).Name });
+            }
+            return crlist;
         }
 
         public static void GetThismounthBA_SignData(string userid) { }
