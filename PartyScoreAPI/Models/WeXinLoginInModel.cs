@@ -65,5 +65,7 @@ namespace PartyScoreAPI.Models
         public string OpenIdKey { get; set; }
 
         public string SessionKey { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 }

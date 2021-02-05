@@ -17,4 +17,8 @@ namespace PartyScoreAPI.Models
         public T Data { get; set; }
     }
 
+    public class LauchActionResult
+    {
+
+    }
 }

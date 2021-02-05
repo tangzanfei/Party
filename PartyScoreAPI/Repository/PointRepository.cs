@@ -74,25 +74,48 @@ namespace PartyScoreAPI.Repository
             return ba == null ? null : ba.ID;
 
         }
-//        public static BaseGetResponse<CheckResult> CheckByScanQrcode(string qrcode, string sessionkey)
-//        {
-//            var res = new BaseGetResponse<CheckResult>() { Code = -1, Msg = "没有这个打卡点", Data = null };
-//            DBUser user = DicUser[sessionkey];
-//            var pointlist = DbHelper.PointBLL.GetModelList("QrCode='" + qrcode + "'");
-//            if (pointlist != null && pointlist.Count > 0)
-//            {
-//                res.Code = 0;
-//                res.Msg = "打卡成功";
-//                res.Data = new CheckResult() { CheckTime = DateTime.Now, CheckPoint = pointlist[0].Name };
-//#warning 需要补充写入志愿打卡表数据。
-//                return res;
-//            }
-//            else
-//            {
-//                return res;
-//            }
-//            return res;
-//        }
+
+        /// <summary>
+        /// 查找是否有在进行的对应打卡点的所有支部活动
+        /// </summary>
+        /// <param name="pointid">打卡点ID</param>
+        /// <returns>所有符合的支部活动列表，如果无则返回空</returns>
+        public static List<DBBranchAction> FindBranchActionByPointID(string pointid)
+        {
+            List<DBBranchAction> listBA = new List<DBBranchAction>();
+            var list = DbHelper.BranchActionBLL.GetModelList("PointID='" + pointid + "'");
+            DateTime now = DateTime.Now;
+            foreach (var item in list)
+            {
+                if (item.BeginTime < now && item.EndTime > now)
+                {
+                    listBA.Add(item);
+                }
+            }
+            return listBA;
+
+        }
+
+
+        //        public static BaseGetResponse<CheckResult> CheckByScanQrcode(string qrcode, string sessionkey)
+        //        {
+        //            var res = new BaseGetResponse<CheckResult>() { Code = -1, Msg = "没有这个打卡点", Data = null };
+        //            DBUser user = DicUser[sessionkey];
+        //            var pointlist = DbHelper.PointBLL.GetModelList("QrCode='" + qrcode + "'");
+        //            if (pointlist != null && pointlist.Count > 0)
+        //            {
+        //                res.Code = 0;
+        //                res.Msg = "打卡成功";
+        //                res.Data = new CheckResult() { CheckTime = DateTime.Now, CheckPoint = pointlist[0].Name };
+        //#warning 需要补充写入志愿打卡表数据。
+        //                return res;
+        //            }
+        //            else
+        //            {
+        //                return res;
+        //            }
+        //            return res;
+        //        }
 
     }
 }

@@ -39,7 +39,7 @@ namespace PartyScoreAPI.Repository
         }
 
         /// <summary>
-        /// 检查是否重复打卡，如果找到则返回ID
+        /// 检查是否重复志愿打卡，如果找到则返回ID
         /// </summary>
         /// <returns>重复数据的ID</returns>
         public static string IsSignined(string pointId, string userid)
@@ -61,7 +61,7 @@ namespace PartyScoreAPI.Repository
         }
 
         /// <summary>
-        /// 打卡
+        /// 志愿打卡
         /// </summary>
         /// <param name="pointId">打卡点的ID</param>
         /// <param name="userid">用户ID</param>
@@ -90,6 +90,12 @@ namespace PartyScoreAPI.Repository
             return result;
         }
 
+
+        /// <summary>
+        /// 获取本月志愿打卡数据
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
         public static List<CheckResult> GetThisMounthSignData(string userid)
         {
             if (!isInited)
@@ -105,6 +111,38 @@ namespace PartyScoreAPI.Repository
             return crlist;
         }
 
+
+        /// <summary>
+        /// 支部活动打卡
+        /// </summary>
+        /// <param name="actionid">支部活动id</param>
+        /// <param name="userid">用户id</param>
+        /// <returns></returns>
+        public static CheckResult BA_Signin(string actionid,string userid)
+        {
+            CheckResult result = new CheckResult();
+            var datalist = DbHelper.UserBranchActionDataBLL.GetModelList("UserID='" + userid + "'");
+            var action = DbHelper.BranchActionBLL.GetModel(actionid);
+            if (datalist!=null && datalist.Count>0)
+            {
+                var list = datalist.Where(x => x.ActionID.Equals(actionid)).ToList();
+                if (list.Count()>0)
+                {
+                    list[0].CheckTime = result.CheckTime = DateTime.Now;
+                    list[0].Checked = true;
+                    result.CheckPoint = action.Title;
+                    return result;
+                }
+            }
+            return null;
+        }
+
+
+
+        /// <summary>
+        /// 获取本月支部打卡数据
+        /// </summary>
+        /// <param name="userid"></param>
         public static void GetThismounthBA_SignData(string userid) { }
     }
 }

@@ -34,29 +34,57 @@ namespace PartyScoreAPI.Controllers
             //二维码以"BA_"开头的为支部活动
             string id="";
             DBCommon.Model.DBPoint point=null;
-            bool isBranchAction = code.StartsWith("BA_");
-            if (isBranchAction)
+            point = PointRepository.FindPoint(code);
+            if (point == null)
             {
-                id = PointRepository.FindBranchActionID(code);
-                if (id == null)
-                {
-                    return res;
-                }
+                return res;
             }
-            else
+
+            //找出该打卡点当前时间正在进行的支部活动
+            var BA_list = PointRepository.FindBranchActionByPointID(point.ID);
+
+            bool isBranchAction =false;
+
+            if (BA_list.Count>0)
             {
-                point = PointRepository.FindPoint(code);
-                if (point == null)
-                {
-                    return res;
-                }
+                isBranchAction = true;
             }
+
 
             //3.打卡是否重复,不重复则写入数据库，重复则返回打卡失败
 #warning 需要完善步骤
             if (isBranchAction)
             {
-
+                string title = "";
+                int num = 0;
+                foreach (var action in BA_list)
+                {                    
+                    var dataresult = ScoreRepository.BA_Signin(action.ID, user.OpenID);
+                    if (dataresult != null)
+                    {
+                        title += dataresult.CheckPoint;
+                        num++;
+                    }
+                    else
+                    {
+                        res.Msg = "打卡失败,未知错误";
+                        res.Code = 4;
+                    }
+                }
+                if (num>0)
+                {
+                    res.Msg = "打卡成功";
+                    res.Code = 0;
+                    res.Data = new CheckResult()
+                    {
+                        CheckPoint = string.Format("{0}共{1}个活动打卡", title, num),
+                        CheckTime = DateTime.Now
+                    };
+                }
+                else
+                {
+                    return res;
+                }
             }
             else
             {
@@ -77,7 +105,7 @@ namespace PartyScoreAPI.Controllers
                 else
                 {
                     res.Msg = "打卡失败,未知错误";
-                    res.Code = 3;
+                    res.Code = 4;
                 }
 
             }

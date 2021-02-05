@@ -33,7 +33,12 @@ namespace PartyScoreAPI.Controllers
 
                     data.OpenIdKey = resultModel.OpenIdKey;
                     data.SessionKey = resultModel.SessionKey;
-
+                    data.IsAdmin = false;
+                    var user = UserRepository.FindUser(resultModel.SessionKey);
+                    if (user!=null)
+                    {
+                        data.IsAdmin = user.IsManager;
+                    }
                     return new BaseGetResponse<LoginResult>() { Code=0,Msg="成功",Data= data };
                 case 40029:
                     //code无效
