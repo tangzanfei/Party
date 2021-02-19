@@ -128,8 +128,13 @@ namespace PartyScoreAPI.Repository
                 var list = datalist.Where(x => x.ActionID.Equals(actionid)).ToList();
                 if (list.Count()>0)
                 {
+                    if (list[0].Checked)
+                    {
+                        return null;
+                    }
                     list[0].CheckTime = result.CheckTime = DateTime.Now;
                     list[0].Checked = true;
+                    DbHelper.UserBranchActionDataBLL.Update(list[0]);
                     result.CheckPoint = action.Title;
                     return result;
                 }

@@ -14,7 +14,7 @@ namespace DBCommon.Model
 		private DateTime _begintime;
 		private DateTime? _endtime;
 		private string _title;
-		private int? _branchid;
+		private string _branchid;
 		private string _pointid;
 		private string _qrcode;
 		/// <summary>
@@ -52,7 +52,7 @@ namespace DBCommon.Model
 		/// <summary>
 		/// 
 		/// </summary>
-		public int? BranchID
+		public string BranchID
 		{
 			set{ _branchid=value;}
 			get{return _branchid;}

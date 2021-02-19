@@ -30,15 +30,15 @@ namespace PartyScoreAPI.Controllers
 
 
         // POST: api/User
-        [HttpPost]
-        public void PostProduct([FromBody]Product value)
-        {
-            if (value != null)
-            {
-                repository.AddProduct(value);
-            }
+        //[HttpPost]
+        //public void PostProduct([FromBody]Product value)
+        //{
+        //    if (value != null)
+        //    {
+        //        repository.AddProduct(value);
+        //    }
 
-        }
+        //}
 
         public class model
         {
@@ -46,11 +46,12 @@ namespace PartyScoreAPI.Controllers
             public string wifiMac;
         }
 
-        [Route("products/CheckIn")]
+        //[Route("CheckIn")]
         [HttpPost]
-        public bool CheckIn([FromBody]model m)
+        //public void CheckIn([FromBody] model m)
+        public void CheckIn(dynamic m)
         {
-            return repository.CheckIn(m.code, m.wifiMac);
+            //return repository.CheckIn(m.code, m.wifiMac);
         }
         //public JsonResult<ResultData> GetData()
         //{

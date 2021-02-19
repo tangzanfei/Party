@@ -31,8 +31,6 @@ namespace PartyScoreAPI.Controllers
                 return res;
             }
             //2.检查是否有这个二维码对应的打卡点
-            //二维码以"BA_"开头的为支部活动
-            string id="";
             DBCommon.Model.DBPoint point=null;
             point = PointRepository.FindPoint(code);
             if (point == null)
@@ -42,7 +40,7 @@ namespace PartyScoreAPI.Controllers
 
             //找出该打卡点当前时间正在进行的支部活动
             var BA_list = PointRepository.FindBranchActionByPointID(point.ID);
-
+            BA_list=BA_list.Where(a => a.BranchID.Equals(user.BranchID)).ToList();
             bool isBranchAction =false;
 
             if (BA_list.Count>0)
@@ -62,12 +60,12 @@ namespace PartyScoreAPI.Controllers
                     var dataresult = ScoreRepository.BA_Signin(action.ID, user.OpenID);
                     if (dataresult != null)
                     {
-                        title += dataresult.CheckPoint;
                         num++;
+                        title += string.Format("[{0}.{1}]", num, dataresult.CheckPoint);
                     }
                     else
                     {
-                        res.Msg = "打卡失败,未知错误";
+                        res.Msg = "打卡失败,没有找到未打卡的支部活动";
                         res.Code = 4;
                     }
                 }

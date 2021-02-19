@@ -117,5 +117,14 @@ namespace PartyScoreAPI.Repository
         //            return res;
         //        }
 
+
+        public static List<DBPoint> GetPointList()
+        {
+            if (!IsInited)
+            {
+                Init();
+            }
+            return ListPoint;
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace DBCommon.DAL
 			strSql.Append("select count(1) from BranchActionInfo");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
-					new SQLiteParameter("@ID", DbType.String,2147483647)			};
+					new SQLiteParameter("@ID", DbType.String)			};
 			parameters[0].Value = ID;
 
 			return DbHelperSQLite.Exists(strSql.ToString(),parameters);
@@ -41,13 +41,13 @@ namespace DBCommon.DAL
 			strSql.Append(" values (");
 			strSql.Append("@ID,@BeginTime,@EndTime,@Title,@BranchID,@PointID,@QrCode)");
 			SQLiteParameter[] parameters = {
-					new SQLiteParameter("@ID", DbType.String,2147483647),
+					new SQLiteParameter("@ID", DbType.String),
 					new SQLiteParameter("@BeginTime", DbType.DateTime),
 					new SQLiteParameter("@EndTime", DbType.DateTime),
-					new SQLiteParameter("@Title", DbType.String,2147483647),
-					new SQLiteParameter("@BranchID", DbType.Int32,8),
-					new SQLiteParameter("@PointID", DbType.String,2147483647),
-					new SQLiteParameter("@QrCode", DbType.String,2147483647)};
+					new SQLiteParameter("@Title", DbType.String),
+					new SQLiteParameter("@BranchID", DbType.String),
+					new SQLiteParameter("@PointID", DbType.String),
+					new SQLiteParameter("@QrCode", DbType.String)};
 			parameters[0].Value = model.ID;
 			parameters[1].Value = model.BeginTime;
 			parameters[2].Value = model.EndTime;
@@ -83,11 +83,11 @@ namespace DBCommon.DAL
 			SQLiteParameter[] parameters = {
 					new SQLiteParameter("@BeginTime", DbType.DateTime),
 					new SQLiteParameter("@EndTime", DbType.DateTime),
-					new SQLiteParameter("@Title", DbType.String,2147483647),
-					new SQLiteParameter("@BranchID", DbType.Int32,8),
-					new SQLiteParameter("@PointID", DbType.String,2147483647),
-					new SQLiteParameter("@QrCode", DbType.String,2147483647),
-					new SQLiteParameter("@ID", DbType.String,2147483647)};
+					new SQLiteParameter("@Title", DbType.String),
+					new SQLiteParameter("@BranchID", DbType.String),
+					new SQLiteParameter("@PointID", DbType.String),
+					new SQLiteParameter("@QrCode", DbType.String),
+					new SQLiteParameter("@ID", DbType.String)};
 			parameters[0].Value = model.BeginTime;
 			parameters[1].Value = model.EndTime;
 			parameters[2].Value = model.Title;
@@ -117,7 +117,7 @@ namespace DBCommon.DAL
 			strSql.Append("delete from BranchActionInfo ");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
-					new SQLiteParameter("@ID", DbType.String,2147483647)			};
+					new SQLiteParameter("@ID", DbType.String)			};
 			parameters[0].Value = ID;
 
 			int rows=DbHelperSQLite.ExecuteSql(strSql.ToString(),parameters);
@@ -160,7 +160,7 @@ namespace DBCommon.DAL
 			strSql.Append("select ID,BeginTime,EndTime,Title,BranchID,PointID,QrCode from BranchActionInfo ");
 			strSql.Append(" where ID=@ID ");
 			SQLiteParameter[] parameters = {
-					new SQLiteParameter("@ID", DbType.String,2147483647)			};
+					new SQLiteParameter("@ID", DbType.String)			};
 			parameters[0].Value = ID;
 
 			DBCommon.Model.DBBranchAction model=new DBCommon.Model.DBBranchAction();
@@ -200,9 +200,9 @@ namespace DBCommon.DAL
 				{
 					model.Title=row["Title"].ToString();
 				}
-				if(row["BranchID"]!=null && row["BranchID"].ToString()!="")
+				if(row["BranchID"]!=null)
 				{
-					model.BranchID=int.Parse(row["BranchID"].ToString());
+					model.BranchID=row["BranchID"].ToString();
 				}
 				if(row["PointID"]!=null)
 				{
