@@ -47,6 +47,25 @@ namespace PartyScoreAPI.Repository
             }
             return null;
         }
+
+        public static List<DBBranchAction> GetUnsiginBA_DataByUserID(string userid)
+        {
+            //1.找出用户打卡状态为否的打卡数据
+            var datalist =DbHelper.UserBranchActionDataBLL.GetModelList("UserID='" + userid + "'");
+            datalist = datalist.Where(x => x.Checked == false).ToList();
+            //2.根据打卡数据的活动id找到对应的活动
+            List<DBBranchAction> resultdata = new List<DBBranchAction>();
+            foreach (var data in datalist)
+            {
+                var action = DbHelper.BranchActionBLL.GetModel(data.ActionID);
+                resultdata.Add(action);
+            }
+            var now = DateTime.Now;
+            resultdata = resultdata.Where(x => x.BeginTime.Month == now.Month && x.BeginTime.Year == now.Year).ToList();
+            //3.返回活动列表
+
+            return resultdata;
+        }
        
     }
 }
