@@ -54,6 +54,17 @@ namespace PartyScoreAPI.Repository
             else
                 return null;
         }
+        public static DBPoint FindPointByWifi(string wifiMac)
+        {
+            var list = DbHelper.PointBLL.GetModelList("WifiMac='" + wifiMac + "'");
+            if (list != null && list.Count > 0)
+            {
+                return list.FirstOrDefault();
+            }
+            else
+                return null;
+
+        }
 
         /// <summary>
         /// 查找是否有对应二维码的支部活动
