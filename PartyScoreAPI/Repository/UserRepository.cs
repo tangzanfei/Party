@@ -23,7 +23,12 @@ namespace PartyScoreAPI.Repository
 
         public static void Init()
         {
-
+            var userlist = DbHelper.UserBLL.GetModelList("");
+            DicUser.Clear();
+            foreach (var user in userlist)
+            {
+                DicUser.Add(user.Session, user);
+            }
         }
 
         public static WeXinLoginResultModel PostCode(string code)
@@ -49,9 +54,9 @@ namespace PartyScoreAPI.Repository
                 //await异步读取最后的JSON（注意此时gzip已经被自动解压缩了，因为上面的AutomaticDecompression = DecompressionMethods.GZip）
                 string responseContent = response.Content.ReadAsStringAsync().Result;
                 var resultModel = JsonConvert.DeserializeObject<WeXinLoginResultModel>(responseContent);
-                resultModel.OpenId = "0001";
-                resultModel.Session_Key = "admin";
-                resultModel.ErrCode = 0;
+                //resultModel.OpenId = "0001";
+                //resultModel.Session_Key = "admin";
+                //resultModel.ErrCode = 0;
                 if (!string.IsNullOrEmpty(resultModel.OpenId) && !string.IsNullOrEmpty(resultModel.Session_Key))
                 {
                     //将openid，session_key存入到Redis缓存中；              
@@ -65,7 +70,9 @@ namespace PartyScoreAPI.Repository
                     {
                         var dbuser = DbHelper.UserBLL.GetModel(resultModel.OpenId);
                         dbuser.LastLoginTime = DateTime.Now;
+                        dbuser.Session = sessionKey;
                         DicUser.Add(sessionKey, dbuser);
+                        DbHelper.UserBLL.Update(dbuser);
                     }
                     else
                     {
@@ -99,6 +106,10 @@ namespace PartyScoreAPI.Repository
 
         public static DBUser FindUser(string sessionkey)
         {
+            if (DicUser.Count < 1)
+            {
+                Init();
+            }
             if (DicUser.ContainsKey(sessionkey))
             {
                 return DicUser[sessionkey];
